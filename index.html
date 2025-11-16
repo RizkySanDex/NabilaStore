@@ -187,63 +187,69 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
 
-        /* THUMBNAIL LEBIH TINGGI & FULL */
-.video-thumbnail {
-    position: relative;
-    width: 100%;
-    height: 210px; /* Tambah tinggi */
-    overflow: hidden;
-    background: var(--dark);
-}
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            height: 210px;
+            overflow: hidden;
+            background: var(--dark);
+        }
 
-.video-thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Pastiin ga kepotong */
-    transition: transform 0.5s;
-}
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
 
-/* HILANGIN VIEWS & DATE */
-.video-meta {
-    display: none; /* Sembunyikan views & date */
-}
+        .video-card:hover .video-thumbnail img {
+            transform: scale(1.05);
+        }
 
-/* VIDEO INFO LEBIH COMPACT */
-.video-info {
-    padding: 12px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
+        .video-duration {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
 
-.video-info h3 {
-    font-size: 0.9rem;
-    margin-bottom: 8px;
-    line-height: 1.3;
-    height: 40px; /* Sedikit lebih tinggi buat 2 baris */
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-}
+        .video-info {
+            padding: 15px;
+        }
 
-/* BUTTONS TETAP ADA */
-.video-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: auto;
-}
+        .video-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            height: 50px;
+            overflow: hidden;
+        }
 
-.video-actions a {
-    flex: 1;
-    text-align: center;
-    padding: 8px 0;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.8rem;
-    transition: all 0.3s;
-}
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        .video-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .video-actions a {
+            flex: 1;
+            text-align: center;
+            padding: 8px 0;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
 
         .watch-btn {
             background: var(--primary);
@@ -270,19 +276,23 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
             z-index: 1000;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
 
         .modal-content {
             background: white;
-            width: 90%;
-            max-width: 800px;
-            border-radius: 8px;
+            width: 100%;
+            max-width: 900px;
+            border-radius: 12px;
             overflow: hidden;
             position: relative;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .modal-header {
@@ -292,6 +302,7 @@
             padding: 15px 20px;
             background: var(--secondary);
             color: white;
+            flex-shrink: 0;
         }
 
         .close-modal {
@@ -300,21 +311,131 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* === MODAL TABS === */
+        .modal-tabs {
+            display: flex;
+            background: #2a2a2a;
+            border-bottom: 1px solid #444;
+            flex-shrink: 0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 15px;
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: #3a3a3a;
+            color: white;
         }
 
         .modal-body {
-            padding: 20px;
+            padding: 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .tab-pane {
+            display: none;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .tab-pane.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-player-container {
+            position: relative;
+            width: 100%;
+            background: var(--dark);
+            overflow: hidden;
+            flex: 1;
         }
 
         .video-player {
             width: 100%;
-            height: 400px;
-            background: var(--dark);
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            margin-bottom: 20px;
+        }
+
+        /* === IMAGE GALLERY === */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            background: #f8f8f8;
+        }
+
+        .image-gallery img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .image-gallery img:hover {
+            transform: scale(1.03);
+            border-color: var(--primary);
+        }
+
+        .gallery-empty {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            background: #f8f8f8;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-empty i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+
+        .video-details {
+            padding: 20px;
+            background: white;
+            flex-shrink: 0;
+            border-top: 1px solid var(--gray);
         }
 
         .video-details h3 {
@@ -334,6 +455,11 @@
             border-radius: 4px;
             text-decoration: none;
             font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .product-link:hover {
+            background: #e0440a;
         }
 
         footer {
@@ -411,6 +537,27 @@
             .video-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
+
+            .modal-content {
+                max-height: 100vh;
+                border-radius: 0;
+            }
+
+            .image-gallery {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .tab-btn {
+                font-size: 0.8rem;
+                padding: 10px 8px;
+            }
         }
     </style>
 </head>
@@ -427,13 +574,21 @@
                     <button><i class="fas fa-search"></i></button>
                 </div>
                 <div class="nav-links">
-    <a href="javascript:;">Beranda</a>
-    <a href="javascript:;">Kategori</a>
-    <a href="javascript:;">Tentang</a>
-</div>
+                    <a href="javascript:;">Beranda</a>
+                    <a href="javascript:;">Kategori</a>
+                    <a href="javascript:;">Tentang</a>
+                </div>
             </div>
         </div>
     </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Video Review Produk Terbaik Shopee</h2>
+            <p>Temukan produk-produk terbaik dengan review video dari pembeli langsung. Dapatkan gambaran nyata sebelum membeli.</p>
+            <a href="#" class="cta-button">Jelajahi Video</a>
+        </div>
+    </section>
 
     <div class="container">
         <div class="filters">
@@ -450,306 +605,421 @@
         </div>
     </div>
 
+    <!-- MODAL DENGAN GALLERY SYSTEM -->
     <div class="modal" id="videoModal">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="modalTitle">Video Title</h3>
                 <button class="close-modal">&times;</button>
             </div>
+            
+            <!-- TAB NAVIGATION -->
+            <div class="modal-tabs">
+                <button class="tab-btn active" data-tab="video">
+                    <i class="fas fa-play-circle"></i> Video Review
+                </button>
+                <button class="tab-btn" data-tab="gallery">
+                    <i class="fas fa-images"></i> Foto Produk
+                </button>
+            </div>
+            
             <div class="modal-body">
-                <div class="video-player" id="modalVideo">
-                    <i class="fas fa-play-circle" style="font-size: 3rem;"></i>
+                <!-- VIDEO TAB -->
+                <div class="tab-pane active" id="videoTab">
+                    <div class="video-player-container">
+                        <div class="video-player" id="modalVideo">
+                            <i class="fas fa-play-circle" style="font-size: 3rem; color: #fff;"></i>
+                        </div>
+                    </div>
                 </div>
+                
+                <!-- GALLERY TAB -->
+                <div class="tab-pane" id="galleryTab">
+                    <div class="image-gallery" id="imageGallery">
+                        <!-- Gallery images akan diisi oleh JavaScript -->
+                    </div>
+                </div>
+                
                 <div class="video-details">
                     <p id="modalDescription">Video description will appear here.</p>
-                    <a href="/" class="product-link" id="modalProductLink" target="_blank">Lihat Produk di Shopee</a>
+                    <a href="#" class="product-link" id="modalProductLink" target="_blank">
+                        <i class="fas fa-shopping-cart"></i> Lihat Produk di Shopee
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-    // === KONFIGURASI BLOGGER API ===
-    const BLOG_ID = '5725416963670414367';
-    const API_KEY = 'AIzaSyA8k0Fr9m-7zsC1EzdOjI3kgMR92bJHs_E';
-
-    // Function untuk load data dari Blogger
-    async function loadVideosFromBlogger() {
-        const BLOG_URL = `https://www.googleapis.com/blogger/v3/blogs/${BLOG_ID}/posts?key=${API_KEY}&maxResults=20`;
-        
-        try {
-            const response = await fetch(BLOG_URL);
-            const data = await response.json();
-            
-            if (data.items) {
-                const videos = data.items.map(post => {
-                    return {
-                        id: post.id,
-                        title: post.title,
-                        thumbnail: extractThumbnail(post),
-                        videoUrl: extractVideoUrl(post),
-                        productLink: extractProductLink(post),
-                        category: extractCategory(post),
-                        duration: extractDuration(post),
-                        views: "0",
-                        date: formatDate(post.published),
-                        description: extractDescription(post)
-                    };
-                });
-                window.currentVideos = videos;
-                displayVideos(videos);
-            }
-        } catch (error) {
-            console.error('Error loading videos from Blogger:', error);
-            // Fallback ke sample data kalo error
-            window.currentVideos = videoData;
-            displayVideos(videoData);
-        }
-    }
-
-    // Helper functions untuk extract data dari Blogger post
-    function extractThumbnail(post) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(post.content, 'text/html');
-        
-        // Cari di metadata dulu
-        const thumbnailElem = doc.querySelector('.thumbnail');
-        if (thumbnailElem && thumbnailElem.textContent) {
-            return thumbnailElem.textContent.trim();
-        }
-        
-        // Fallback: cari gambar pertama di konten
-        const firstImg = doc.querySelector('img');
-        return firstImg ? firstImg.src : 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
-    }
-
-    function extractVideoUrl(post) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(post.content, 'text/html');
-        const videoUrlElem = doc.querySelector('.video_url');
-        return videoUrlElem ? videoUrlElem.textContent.trim() : '';
-    }
-
-    function extractProductLink(post) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(post.content, 'text/html');
-        const productLinkElem = doc.querySelector('.product_link');
-        return productLinkElem ? productLinkElem.textContent.trim() : '';
-    }
-
-    function extractCategory(post) {
-        return post.labels && post.labels.length > 0 ? post.labels[0] : 'Uncategorized';
-    }
-
-    function extractDuration(post) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(post.content, 'text/html');
-        const durationElem = doc.querySelector('.duration');
-        return durationElem ? durationElem.textContent.trim() : '10:00';
-    }
-
-    function extractDescription(post) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(post.content, 'text/html');
-        const descriptionElem = doc.querySelector('.video-description');
-        if (descriptionElem) {
-            const text = descriptionElem.textContent || '';
-            return text.substring(0, 150) + (text.length > 150 ? '...' : '');
-        }
-        return post.title || 'No description available';
-    }
-
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        const now = new Date();
-        const diffTime = Math.abs(now - date);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        
-        if (diffDays === 1) return '1 hari lalu';
-        if (diffDays < 7) return `${diffDays} hari lalu`;
-        if (diffDays < 30) return `${Math.floor(diffDays / 7)} minggu lalu`;
-        return `${Math.floor(diffDays / 30)} bulan lalu`;
-    }
-
-    // Sample video data (fallback kalo Blogger API gagal)
-    const videoData = [
-        {
-            id: 1,
-            title: "Review iPhone 15 Pro Max - Worth It Gak Sih?",
-            thumbnail: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-            duration: "12:45",
-            category: "Elektronik",
-            views: "245K",
-            date: "2 hari lalu",
-            productLink: "https://shope.ee/iphone15promax",
-            description: "Review lengkap iPhone 15 Pro Max setelah pemakaian 1 minggu. Dari performa, kamera, hingga battery life."
-        }
-    ];
-
-    // Function to display videos
-    function displayVideos(videos) {
-    const container = document.getElementById('videoContainer');
-    if (!container) {
-        console.error('Video container not found!');
-        return;
-    }
-    
-    container.innerHTML = '';
-
-    if (videos.length === 0) {
-        container.innerHTML = '<p style="text-align: center; padding: 40px;">Tidak ada produk ditemukan</p>';
-        return;
-    }
-
-    videos.forEach(video => {
-        const videoCard = document.createElement('div');
-        videoCard.className = 'video-card';
-        videoCard.innerHTML = `
-            <div class="video-thumbnail">
-                <img src="${video.thumbnail}" alt="${video.title}" onerror="this.src='https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
-                <div class="video-duration">${video.duration}</div>
-            </div>
-            <div class="video-info">
-                <h3>${video.title}</h3>
-                <div class="video-actions">
-                    <a href="/" class="watch-btn" data-id="${video.id}">
-                        <i class="fas fa-play"></i> Tonton
-                    </a>
-                    <a href="${video.productLink}" class="buy-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Beli
-                    </a>
-                </div>
-            </div>
-        `;
-        container.appendChild(videoCard);
-    });
-
-    // Add event listeners to watch buttons
-    document.querySelectorAll('.watch-btn').forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const videoId = this.getAttribute('data-id');
-            openVideoModal(videoId, videos);
-        });
-    });
-}
-
-    // FUNCTION OPEN VIDEO MODAL - HYBRID YOUTUBE & SHOPEE
-    function openVideoModal(videoId, videos) {
-        const video = videos.find(v => v.id == videoId);
-        if (!video) return;
-
-        document.getElementById('modalTitle').textContent = video.title;
-        document.getElementById('modalDescription').textContent = video.description;
-        document.getElementById('modalProductLink').href = video.productLink;
-
-        const videoPlayer = document.getElementById('modalVideo');
-        
-        // DETECT YOUTUBE
-        if (video.videoUrl.includes('youtube.com/embed') || video.videoUrl.includes('youtu.be')) {
-            // YOUTUBE EMBED
-            let youtubeUrl = video.videoUrl;
-            
-            // Convert youtu.be to embed format
-            if (youtubeUrl.includes('youtu.be/')) {
-                const videoId = youtubeUrl.split('youtu.be/')[1];
-                youtubeUrl = `https://www.youtube.com/embed/${videoId}`;
-            }
-            
-            videoPlayer.innerHTML = `
-                <iframe 
-                    width="100%" 
-                    height="100%" 
-                    src="${youtubeUrl}?autoplay=1" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen
-                    style="background: #000;">
-                </iframe>
-            `;
-        } 
-        // DETECT SHOPEE VIDEO
-        else if (video.videoUrl.includes('.mp4') || video.videoUrl.includes('vod.susercontent.com')) {
-            // SHOPEE VIDEO
-            videoPlayer.innerHTML = `
-                <video controls width="100%" height="100%" style="background: #000;">
-                    <source src="${video.videoUrl}" type="video/mp4">
-                    Browser Anda tidak mendukung pemutaran video.
-                </video>
-                <div class="video-fallback" style="display: none; text-align: center; padding: 20px; background: #000; color: white; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ShopeeVideo</h3>
+                    <p>Platform kumpulan video review produk Shopee terbaik untuk membantu Anda berbelanja lebih cerdas.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
                     </div>
-            `;
-
-            const videoElem = videoPlayer.querySelector('video');
-            const fallback = videoPlayer.querySelector('.video-fallback');
-            
-            if (videoElem) {
-                videoElem.addEventListener('error', function() {
-                    videoElem.style.display = 'none';
-                    fallback.style.display = 'flex';
-                });
-            }
-        } 
-        // FALLBACK - REDIRECT KE SHOPEE
-        else {
-            videoPlayer.innerHTML = `
-                <div style="text-align: center; padding: 50px; background: #000; color: white; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                    <i class="fas fa-play-circle" style="font-size: 3rem; margin-bottom: 20px;"></i>
-                    <p>Video tidak tersedia</p>
-                    <a href="${video.productLink}" target="_blank" class="product-link" style="margin-top: 20px;">
-                        <i class="fas fa-external-link-alt"></i> Tonton di Shopee
-                    </a>
                 </div>
-            `;
+                <div class="footer-section">
+                    <h3>Kategori</h3>
+                    <a href="#">Elektronik</a>
+                    <a href="#">Fashion Pria</a>
+                    <a href="#">Fashion Wanita</a>
+                    <a href="#">Kecantikan</a>
+                    <a href="#">Rumah Tangga</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Link Cepat</h3>
+                    <a href="#">Beranda</a>
+                    <a href="#">Video Populer</a>
+                    <a href="#">Produk Terbaru</a>
+                    <a href="#">Tentang Kami</a>
+                    <a href="#">Kontak</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Kontak</h3>
+                    <p><i class="fas fa-envelope"></i> info@shopeevideo.com</p>
+                    <p><i class="fas fa-phone"></i> +62 123 4567 890</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 ShopeeVideo. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // === KONFIGURASI BLOGGER API ===
+        const BLOG_ID = '5725416963670414367';
+        const API_KEY = 'AIzaSyA8k0Fr9m-7zsC1EzdOjI3kgMR92bJHs_E';
+
+        // Function untuk load data dari Blogger
+        async function loadVideosFromBlogger() {
+            const BLOG_URL = `https://www.googleapis.com/blogger/v3/blogs/${BLOG_ID}/posts?key=${API_KEY}&maxResults=20`;
+            
+            try {
+                const response = await fetch(BLOG_URL);
+                const data = await response.json();
+                
+                if (data.items) {
+                    const videos = data.items.map(post => {
+                        return {
+                            id: post.id,
+                            title: post.title,
+                            thumbnail: extractThumbnail(post),
+                            videoUrl: extractVideoUrl(post),
+                            productLink: extractProductLink(post),
+                            category: extractCategory(post),
+                            duration: extractDuration(post),
+                            views: "0",
+                            date: formatDate(post.published),
+                            description: extractDescription(post),
+                            rawPost: post // Simpan raw post untuk extract gallery
+                        };
+                    });
+                    window.currentVideos = videos;
+                    displayVideos(videos);
+                }
+            } catch (error) {
+                console.error('Error loading videos from Blogger:', error);
+                // Fallback ke sample data kalo error
+                window.currentVideos = videoData;
+                displayVideos(videoData);
+            }
         }
 
-        document.getElementById('videoModal').style.display = 'flex';
-    }
-
-    // Function to close modal
-    document.querySelector('.close-modal').addEventListener('click', function() {
-        document.getElementById('videoModal').style.display = 'none';
-    });
-
-    // Close modal when clicking outside
-    window.addEventListener('click', function(e) {
-        if (e.target === document.getElementById('videoModal')) {
-            document.getElementById('videoModal').style.display = 'none';
-        }
-    });
-
-    // Filter functionality
-    document.querySelectorAll('.filter-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
+        // Helper functions untuk extract data dari Blogger post
+        function extractThumbnail(post) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(post.content, 'text/html');
             
-            this.classList.add('active');
-            
-            const filter = this.textContent;
-            let filteredVideos = window.currentVideos || [];
-            
-            if (filter !== 'Semua') {
-                filteredVideos = filteredVideos.filter(video => video.category === filter);
+            // Cari di metadata dulu
+            const thumbnailElem = doc.querySelector('.thumbnail');
+            if (thumbnailElem && thumbnailElem.textContent) {
+                return thumbnailElem.textContent.trim();
             }
             
+            // Fallback: cari gambar pertama di konten
+            const firstImg = doc.querySelector('img');
+            return firstImg ? firstImg.src : 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
+        }
+
+        function extractVideoUrl(post) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(post.content, 'text/html');
+            const videoUrlElem = doc.querySelector('.video_url');
+            return videoUrlElem ? videoUrlElem.textContent.trim() : '';
+        }
+
+        function extractProductLink(post) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(post.content, 'text/html');
+            const productLinkElem = doc.querySelector('.product_link');
+            return productLinkElem ? productLinkElem.textContent.trim() : '#';
+        }
+
+        function extractCategory(post) {
+            return post.labels && post.labels.length > 0 ? post.labels[0] : 'Uncategorized';
+        }
+
+        function extractDuration(post) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(post.content, 'text/html');
+            const durationElem = doc.querySelector('.duration');
+            return durationElem ? durationElem.textContent.trim() : '10:00';
+        }
+
+        function extractDescription(post) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(post.content, 'text/html');
+            const descriptionElem = doc.querySelector('.video-description');
+            if (descriptionElem) {
+                const text = descriptionElem.textContent || '';
+                return text.substring(0, 150) + (text.length > 150 ? '...' : '');
+            }
+            return post.title || 'No description available';
+        }
+
+        // Function untuk extract gallery images
+        function extractGallery(post) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(post.content, 'text/html');
+            const galleryElem = doc.querySelector('.gallery');
+            if (galleryElem && galleryElem.textContent) {
+                return galleryElem.textContent.split(',').map(url => url.trim()).filter(url => url !== '');
+            }
+            return [];
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffTime = Math.abs(now - date);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays === 1) return '1 hari lalu';
+            if (diffDays < 7) return `${diffDays} hari lalu`;
+            if (diffDays < 30) return `${Math.floor(diffDays / 7)} minggu lalu`;
+            return `${Math.floor(diffDays / 30)} bulan lalu`;
+        }
+
+        // Sample video data (fallback kalo Blogger API gagal)
+        const videoData = [
+            {
+                id: 1,
+                title: "Review iPhone 15 Pro Max - Worth It Gak Sih?",
+                thumbnail: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                duration: "12:45",
+                category: "Elektronik",
+                views: "245K",
+                date: "2 hari lalu",
+                productLink: "https://shope.ee/iphone15promax",
+                description: "Review lengkap iPhone 15 Pro Max setelah pemakaian 1 minggu. Dari performa, kamera, hingga battery life."
+            }
+        ];
+
+        // Function to display videos
+        function displayVideos(videos) {
+            const container = document.getElementById('videoContainer');
+            if (!container) {
+                console.error('Video container not found!');
+                return;
+            }
+            
+            container.innerHTML = '';
+
+            if (videos.length === 0) {
+                container.innerHTML = '<p style="text-align: center; padding: 40px;">Tidak ada produk ditemukan</p>';
+                return;
+            }
+
+            videos.forEach(video => {
+                const videoCard = document.createElement('div');
+                videoCard.className = 'video-card';
+                videoCard.innerHTML = `
+                    <div class="video-thumbnail">
+                        <img src="${video.thumbnail}" alt="${video.title}" onerror="this.src='https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
+                        <div class="video-duration">${video.duration}</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>${video.title}</h3>
+                        <div class="video-meta">
+                            <span>${video.views} views</span>
+                            <span>${video.date}</span>
+                        </div>
+                        <div class="video-actions">
+                            <a href="#" class="watch-btn" data-id="${video.id}">
+                                <i class="fas fa-play"></i> Tonton
+                            </a>
+                            <a href="${video.productLink}" class="buy-btn" target="_blank">
+                                <i class="fas fa-shopping-cart"></i> Beli
+                            </a>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(videoCard);
+            });
+
+            // Add event listeners to watch buttons
+            document.querySelectorAll('.watch-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const videoId = this.getAttribute('data-id');
+                    openVideoModal(videoId, videos);
+                });
+            });
+        }
+
+        // Function to open video modal dengan GALLERY SYSTEM
+        function openVideoModal(videoId, videos) {
+            const video = videos.find(v => v.id == videoId);
+            if (!video) return;
+
+            document.getElementById('modalTitle').textContent = video.title;
+            document.getElementById('modalDescription').textContent = video.description;
+            document.getElementById('modalProductLink').href = video.productLink;
+
+            // Extract gallery images
+            const galleryImages = extractGallery(video.rawPost || {});
+
+            // Setup tabs
+            setupModalTabs();
+            
+            // Setup video player
+            setupVideoPlayer(video);
+            
+            // Setup gallery
+            setupImageGallery(galleryImages);
+
+            document.getElementById('videoModal').style.display = 'flex';
+        }
+
+        // Setup modal tabs
+        function setupModalTabs() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabPanes.forEach(p => p.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    document.getElementById(targetTab + 'Tab').classList.add('active');
+                });
+            });
+        }
+
+        // Setup video player
+        function setupVideoPlayer(video) {
+            const videoPlayer = document.getElementById('modalVideo');
+            
+            if (video.videoUrl.includes('youtube.com/embed') || video.videoUrl.includes('youtu.be')) {
+                // YOUTUBE EMBED
+                let youtubeUrl = video.videoUrl;
+                if (youtubeUrl.includes('youtu.be/')) {
+                    const videoId = youtubeUrl.split('youtu.be/')[1];
+                    youtubeUrl = `https://www.youtube.com/embed/${videoId}`;
+                }
+                
+                videoPlayer.innerHTML = `
+                    <iframe 
+                        width="100%" 
+                        height="100%" 
+                        src="${youtubeUrl}" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                `;
+            } else if (video.videoUrl.includes('.mp4') || video.videoUrl.includes('vod.susercontent.com')) {
+                // SHOPEE VIDEO
+                videoPlayer.innerHTML = `
+                    <video controls width="100%" height="100%">
+                        <source src="${video.videoUrl}" type="video/mp4">
+                    </video>
+                `;
+            } else {
+                videoPlayer.innerHTML = `
+                    <div style="text-align: center; padding: 50px; color: white; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <i class="fas fa-play-circle" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                        <p>Video tidak tersedia</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Setup image gallery
+        function setupImageGallery(images) {
+            const galleryContainer = document.getElementById('imageGallery');
+            
+            if (images.length > 0) {
+                galleryContainer.innerHTML = images.map(img => `
+                    <img src="${img}" alt="Gallery Image" onerror="this.style.display='none'">
+                `).join('');
+            } else {
+                galleryContainer.innerHTML = `
+                    <div class="gallery-empty">
+                        <i class="fas fa-images"></i>
+                        <p>Tidak ada foto produk</p>
+                        <small>Tambahkan foto produk di postingan Blogger</small>
+                    </div>
+                `;
+            }
+        }
+
+        // Function to close modal
+        document.querySelector('.close-modal').addEventListener('click', function() {
+            document.getElementById('videoModal').style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === document.getElementById('videoModal')) {
+                document.getElementById('videoModal').style.display = 'none';
+            }
+        });
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                this.classList.add('active');
+                
+                const filter = this.textContent;
+                let filteredVideos = window.currentVideos || [];
+                
+                if (filter !== 'Semua') {
+                    filteredVideos = filteredVideos.filter(video => video.category === filter);
+                }
+                
+                displayVideos(filteredVideos);
+            });
+        });
+
+        // Search functionality
+        document.querySelector('.search-bar input').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const filteredVideos = (window.currentVideos || []).filter(video => 
+                video.title.toLowerCase().includes(searchTerm) || 
+                video.description.toLowerCase().includes(searchTerm)
+            );
             displayVideos(filteredVideos);
         });
-    });
 
-    // Search functionality
-    document.querySelector('.search-bar input').addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        const filteredVideos = (window.currentVideos || []).filter(video => 
-            video.title.toLowerCase().includes(searchTerm) || 
-            video.description.toLowerCase().includes(searchTerm)
-        );
-        displayVideos(filteredVideos);
-    });
-
-    // Initialize dengan Blogger API
-    loadVideosFromBlogger();
-</script>
+        // Initialize dengan Blogger API
+        loadVideosFromBlogger();
+    </script>
 </body>
 </html>
