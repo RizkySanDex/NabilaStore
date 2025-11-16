@@ -295,25 +295,36 @@
             flex-direction: column;
         }
 
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background: var(--secondary);
-            color: white;
-            flex-shrink: 0;
-        }
-/* Hide judul di modal header biar video lebih luas */
-.modal-header h3 {
-    display: none !important;
-}
-
-/* Rapihin modal header jadi cuma tombol close doang */
+        /* Modal header tanpa judul */
 .modal-header {
+    display: flex;
     justify-content: flex-end;
     padding: 15px 20px;
-    min-height: auto;
+    background: transparent;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1001;
+    width: 100%;
+}
+
+/* Tombol close kecil dan transparan */
+.close-modal {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-modal:hover {
+    background: rgba(0, 0, 0, 0.7);
 }
         .close-modal {
             background: none;
@@ -649,9 +660,8 @@
     <div class="modal" id="videoModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="modalTitle">Video Title</h3>
-                <button class="close-modal">&times;</button>
-            </div>
+    <button class="close-modal" style="margin-left: auto;">&times;</button>
+</div>
             
             <!-- TAB NAVIGATION -->          
             <div class="modal-body">
