@@ -561,7 +561,7 @@
         }
     }
 
-    // Helper functions untuk extract data dari Blogger post (VERSI FIX)
+    // Helper functions untuk extract data dari Blogger post
     function extractThumbnail(post) {
         const parser = new DOMParser();
         const doc = parser.parseFromString(post.content, 'text/html');
@@ -692,7 +692,7 @@
         });
     }
 
-    // Function to open video modal - HYBRID SYSTEM
+    // FUNCTION OPEN VIDEO MODAL - HYBRID YOUTUBE & SHOPEE
     function openVideoModal(videoId, videos) {
         const video = videos.find(v => v.id == videoId);
         if (!video) return;
@@ -701,11 +701,34 @@
         document.getElementById('modalDescription').textContent = video.description;
         document.getElementById('modalProductLink').href = video.productLink;
 
-        // HYBRID SYSTEM: Coba embed video Shopee, kalo gagal kasih opsi redirect
         const videoPlayer = document.getElementById('modalVideo');
         
-        if (video.videoUrl) {
-            // Coba embed video Shopee
+        // DETECT YOUTUBE
+        if (video.videoUrl.includes('youtube.com/embed') || video.videoUrl.includes('youtu.be')) {
+            // YOUTUBE EMBED
+            let youtubeUrl = video.videoUrl;
+            
+            // Convert youtu.be to embed format
+            if (youtubeUrl.includes('youtu.be/')) {
+                const videoId = youtubeUrl.split('youtu.be/')[1];
+                youtubeUrl = `https://www.youtube.com/embed/${videoId}`;
+            }
+            
+            videoPlayer.innerHTML = `
+                <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src="${youtubeUrl}?autoplay=1" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen
+                    style="background: #000;">
+                </iframe>
+            `;
+        } 
+        // DETECT SHOPEE VIDEO
+        else if (video.videoUrl.includes('.mp4') || video.videoUrl.includes('vod.susercontent.com')) {
+            // SHOPEE VIDEO
             videoPlayer.innerHTML = `
                 <video controls width="100%" height="100%" style="background: #000;">
                     <source src="${video.videoUrl}" type="video/mp4">
@@ -720,7 +743,6 @@
                 </div>
             `;
 
-            // Cek kalo video error
             const videoElem = videoPlayer.querySelector('video');
             const fallback = videoPlayer.querySelector('.video-fallback');
             
@@ -729,13 +751,10 @@
                     videoElem.style.display = 'none';
                     fallback.style.display = 'flex';
                 });
-
-                videoElem.addEventListener('loadeddata', function() {
-                    fallback.style.display = 'none';
-                });
             }
-        } else {
-            // Kalo ga ada videoUrl, langsung kasih opsi redirect
+        } 
+        // FALLBACK - REDIRECT KE SHOPEE
+        else {
             videoPlayer.innerHTML = `
                 <div style="text-align: center; padding: 50px; background: #000; color: white; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                     <i class="fas fa-play-circle" style="font-size: 3rem; margin-bottom: 20px;"></i>
