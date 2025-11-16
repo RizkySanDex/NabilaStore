@@ -401,56 +401,55 @@
 
     // Function to display videos
     function displayVideos(videos) {
-    const container = document.getElementById('videoContainer');
-    if (!container) {
-        console.error('Video container not found!');
-        return;
-    }
-    
-    container.innerHTML = '';
+        const container = document.getElementById('videoContainer');
+        if (!container) {
+            console.error('Video container not found!');
+            return;
+        }
+        
+        container.innerHTML = '';
 
-    if (videos.length === 0) {
-        container.innerHTML = '<p style="text-align: center; padding: 40px;">Tidak ada produk ditemukan</p>';
-        return;
-    }
+        if (videos.length === 0) {
+            container.innerHTML = '<p style="text-align: center; padding: 40px;">Tidak ada video ditemukan</p>';
+            return;
+        }
 
-    videos.forEach(video => {
-        const videoCard = document.createElement('div');
-        videoCard.className = 'video-card';
-        videoCard.innerHTML = `
-            <div class="video-thumbnail">
-                <img src="${video.thumbnail}" alt="${video.title}" onerror="this.src='https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
-                <div class="video-duration">${video.duration}</div>
-            </div>
-            <div class="video-info">
-                <h3>${video.title}</h3>
-                <div class="video-price">Rp${video.views}</div>
-                <div class="video-meta">
-                    <span>${video.category}</span>
-                    <span>${video.date}</span>
+        videos.forEach(video => {
+            const videoCard = document.createElement('div');
+            videoCard.className = 'video-card';
+            videoCard.innerHTML = `
+                <div class="video-thumbnail">
+                    <img src="${video.thumbnail}" alt="${video.title}" onerror="this.src='https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
+                    <div class="video-duration">${video.duration}</div>
                 </div>
-                <div class="video-actions">
-                    <a href="#" class="watch-btn" data-id="${video.id}">
-                        <i class="fas fa-eye"></i> Lihat
-                    </a>
-                    <a href="${video.productLink}" class="buy-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Beli
-                    </a>
+                <div class="video-info">
+                    <h3>${video.title}</h3>
+                    <div class="video-meta">
+                        <span>${video.views} views</span>
+                        <span>${video.date}</span>
+                    </div>
+                    <div class="video-actions">
+                        <a href="#" class="watch-btn" data-id="${video.id}">
+                            <i class="fas fa-play"></i> Tonton
+                        </a>
+                        <a href="${video.productLink}" class="buy-btn" target="_blank">
+                            <i class="fas fa-shopping-cart"></i> Beli
+                        </a>
+                    </div>
                 </div>
-            </div>
-        `;
-        container.appendChild(videoCard);
-    });
-
-    // Add event listeners to watch buttons
-    document.querySelectorAll('.watch-btn').forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const videoId = this.getAttribute('data-id');
-            openVideoModal(videoId, videos);
+            `;
+            container.appendChild(videoCard);
         });
-    });
-}
+
+        // Add event listeners to watch buttons
+        document.querySelectorAll('.watch-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const videoId = this.getAttribute('data-id');
+                openVideoModal(videoId, videos);
+            });
+        });
+    }
 
     // Function to open video modal - HYBRID SYSTEM
     function openVideoModal(videoId, videos) {
