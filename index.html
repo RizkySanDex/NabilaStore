@@ -643,16 +643,7 @@
                 <button class="close-modal">&times;</button>
             </div>
             
-            <!-- TAB NAVIGATION -->
-            <div class="modal-tabs">
-                <button class="tab-btn active" data-tab="video">
-                    <i class="fas fa-play-circle"></i> Video Review
-                </button>
-                <button class="tab-btn" data-tab="gallery">
-                    <i class="fas fa-images"></i> Foto Produk
-                </button>
-            </div>
-            
+            <!-- TAB NAVIGATION -->          
             <div class="modal-body">
                 <!-- VIDEO TAB -->
                 <div class="tab-pane active" id="videoTab">
@@ -671,11 +662,19 @@
                 </div>
                 
                 <div class="video-details">
-                    <p id="modalDescription">Video description will appear here.</p>
-                    <a href="#" class="product-link" id="modalProductLink" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Lihat Produk di Shopee
-                    </a>
-                </div>
+    <p id="modalDescription">Video description will appear here.</p>
+    <div class="button-row" style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+        <button class="tab-btn active" data-tab="video" style="flex: 1; min-width: 140px; padding: 12px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
+            <i class="fas fa-play-circle"></i> Video Review
+        </button>
+        <button class="tab-btn" data-tab="gallery" style="flex: 1; min-width: 140px; padding: 12px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
+            <i class="fas fa-images"></i> Foto Produk
+        </button>
+        <a href="#" class="product-link" id="modalProductLink" target="_blank" style="flex: 1; min-width: 160px; padding: 12px; background: #ff5314; color: white; text-decoration: none; border-radius: 4px; font-weight: 500; text-align: center;">
+            <i class="fas fa-shopping-cart"></i> Lihat Produk di Shopee
+        </a>
+    </div>
+</div>
             </div>
         </div>
     </div>
