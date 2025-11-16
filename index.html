@@ -534,7 +534,7 @@
         const parser = new DOMParser();
         const doc = parser.parseFromString(post.content, 'text/html');
         const productLinkElem = doc.querySelector('.product_link');
-        return productLinkElem ? productLinkElem.textContent.trim() : '#';
+        return productLinkElem ? productLinkElem.textContent.trim() : '';
     }
 
     function extractCategory(post) {
@@ -612,7 +612,7 @@
             <div class="video-info">
                 <h3>${video.title}</h3>
                 <div class="video-actions">
-                    <a href="#" class="watch-btn" data-id="${video.id}">
+                    <a href="/" class="watch-btn" data-id="${video.id}">
                         <i class="fas fa-play"></i> Tonton
                     </a>
                     <a href="${video.productLink}" class="buy-btn" target="_blank">
