@@ -371,21 +371,51 @@
             flex-direction: column;
         }
 
-        .video-player-container {
-            position: relative;
-            width: 100%;
-            background: var(--dark);
-            overflow: hidden;
-            flex: 1;
-        }
+        /* === FIX VIDEO PLAYER SIZE === */
+.video-player-container {
+    position: relative;
+    width: 100%;
+    background: var(--dark);
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        .video-player {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.video-player {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Untuk YouTube */
+.video-player iframe {
+    width: 100%;
+    height: 400px; /* Fixed height */
+    border: none;
+}
+
+/* Untuk Video HTML5 */
+.video-player video {
+    width: 100%;
+    height: 400px; /* Fixed height */
+    object-fit: contain; /* Pastiin ga kepotong */
+}
+
+/* Untuk placeholder */
+.video-player .video-placeholder {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
 
         /* === IMAGE GALLERY === */
         .image-gallery {
@@ -919,43 +949,45 @@
         }
 
         // Setup video player
-        function setupVideoPlayer(video) {
-            const videoPlayer = document.getElementById('modalVideo');
-            
-            if (video.videoUrl.includes('youtube.com/embed') || video.videoUrl.includes('youtu.be')) {
-                // YOUTUBE EMBED
-                let youtubeUrl = video.videoUrl;
-                if (youtubeUrl.includes('youtu.be/')) {
-                    const videoId = youtubeUrl.split('youtu.be/')[1];
-                    youtubeUrl = `https://www.youtube.com/embed/${videoId}`;
-                }
-                
-                videoPlayer.innerHTML = `
-                    <iframe 
-                        width="100%" 
-                        height="100%" 
-                        src="${youtubeUrl}" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
-                `;
-            } else if (video.videoUrl.includes('.mp4') || video.videoUrl.includes('vod.susercontent.com')) {
-                // SHOPEE VIDEO
-                videoPlayer.innerHTML = `
-                    <video controls width="100%" height="100%">
-                        <source src="${video.videoUrl}" type="video/mp4">
-                    </video>
-                `;
-            } else {
-                videoPlayer.innerHTML = `
-                    <div style="text-align: center; padding: 50px; color: white; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                        <i class="fas fa-play-circle" style="font-size: 3rem; margin-bottom: 20px;"></i>
-                        <p>Video tidak tersedia</p>
-                    </div>
-                `;
-            }
+        // Setup video player - FIXED SIZE
+function setupVideoPlayer(video) {
+    const videoPlayer = document.getElementById('modalVideo');
+    
+    if (video.videoUrl.includes('youtube.com/embed') || video.videoUrl.includes('youtu.be')) {
+        // YOUTUBE EMBED - FIXED SIZE
+        let youtubeUrl = video.videoUrl;
+        if (youtubeUrl.includes('youtu.be/')) {
+            const videoId = youtubeUrl.split('youtu.be/')[1];
+            youtubeUrl = `https://www.youtube.com/embed/${videoId}`;
         }
+        
+        videoPlayer.innerHTML = `
+            <iframe 
+                width="100%" 
+                height="400" 
+                src="${youtubeUrl}" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+        `;
+    } else if (video.videoUrl.includes('.mp4') || video.videoUrl.includes('vod.susercontent.com')) {
+        // SHOPEE VIDEO - FIXED SIZE
+        videoPlayer.innerHTML = `
+            <video controls width="100%" height="400" style="object-fit: contain;">
+                <source src="${video.videoUrl}" type="video/mp4">
+            </video>
+        `;
+    } else {
+        // PLACEHOLDER - FIXED SIZE
+        videoPlayer.innerHTML = `
+            <div class="video-placeholder">
+                <i class="fas fa-play-circle" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                <p>Video tidak tersedia</p>
+            </div>
+        `;
+    }
+}
 
         // Setup image gallery
         function setupImageGallery(images) {
