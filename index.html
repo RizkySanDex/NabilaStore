@@ -595,14 +595,7 @@
         return post.labels && post.labels.length > 0 ? post.labels[0] : 'Uncategorized';
     }
 
-    function extractDuration(post) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(post.content, 'text/html');
-        const durationElem = doc.querySelector('.duration');
-        return durationElem ? durationElem.textContent.trim() : '';
-    }
-
-    function extractDescription(post) {
+   function extractDescription(post) {
         const parser = new DOMParser();
         const doc = parser.parseFromString(post.content, 'text/html');
         const descriptionElem = doc.querySelector('.video-description');
