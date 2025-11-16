@@ -906,7 +906,22 @@
         // Function to open video modal dengan GALLERY SYSTEM
         function openVideoModal(videoId, videos) {
             const video = videos.find(v => v.id == videoId);
-            if (!video) return;
+            if (!video) return;// Auto play video ketika modal pertama dibuka
+setTimeout(() => {
+    const videoPlayer = document.getElementById('modalVideo');
+    const video = videoPlayer.querySelector('video');
+    const iframe = videoPlayer.querySelector('iframe');
+    
+    // Untuk HTML5 video
+    if (video) {
+        video.play().catch(e => console.log('Auto-play prevented:', e));
+    }
+    
+    // Untuk YouTube iframe  
+    if (iframe && !iframe.src.includes('autoplay=1')) {
+        iframe.src = iframe.src + (iframe.src.includes('?') ? '&autoplay=1' : '?autoplay=1');
+    }
+}, 500);
 
             document.getElementById('modalTitle').textContent = video.title;
             document.getElementById('modalDescription').textContent = video.description;
@@ -928,24 +943,43 @@
         }
 
         // Setup modal tabs
-        function setupModalTabs() {
-            const tabBtns = document.querySelectorAll('.tab-btn');
-            const tabPanes = document.querySelectorAll('.tab-pane');
+        // Setup modal tabs - FIXED VERSION
+function setupModalTabs() {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+    
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const targetTab = this.getAttribute('data-tab');
             
-            tabBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const targetTab = this.getAttribute('data-tab');
-                    
-                    // Remove active class from all
-                    tabBtns.forEach(b => b.classList.remove('active'));
-                    tabPanes.forEach(p => p.classList.remove('active'));
-                    
-                    // Add active class to clicked tab
-                    this.classList.add('active');
-                    document.getElementById(targetTab + 'Tab').classList.add('active');
-                });
-            });
-        }
+            // Remove active class from all
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabPanes.forEach(p => p.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            this.classList.add('active');
+            document.getElementById(targetTab + 'Tab').classList.add('active');
+            
+            // AUTO PLAY VIDEO ketika klik tombol Video Review
+            if (targetTab === 'video') {
+                const videoPlayer = document.getElementById('modalVideo');
+                const video = videoPlayer.querySelector('video');
+                const iframe = videoPlayer.querySelector('iframe');
+                
+                // Untuk HTML5 video
+                if (video) {
+                    video.play().catch(e => console.log('Auto-play prevented:', e));
+                }
+                
+                // Untuk YouTube iframe
+                if (iframe) {
+                    const iframeSrc = iframe.src;
+                    iframe.src = iframeSrc + (iframeSrc.includes('?') ? '&autoplay=1' : '?autoplay=1');
+                }
+            }
+        });
+    });
+}
 
         // Setup video player
         // Setup video player - FIXED SIZE
