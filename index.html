@@ -907,6 +907,7 @@
         function openVideoModal(videoId, videos) {
             const video = videos.find(v => v.id == videoId);
             if (!video) return;// Auto play video ketika modal pertama dibuka
+// Auto play video ketika modal pertama dibuka
 setTimeout(() => {
     const videoPlayer = document.getElementById('modalVideo');
     const video = videoPlayer.querySelector('video');
@@ -944,6 +945,7 @@ setTimeout(() => {
 
         // Setup modal tabs
         // Setup modal tabs - FIXED VERSION
+// Setup modal tabs - WITH PLAY/PAUSE TOGGLE
 function setupModalTabs() {
     const tabBtns = document.querySelectorAll('.tab-btn');
     const tabPanes = document.querySelectorAll('.tab-pane');
@@ -960,25 +962,36 @@ function setupModalTabs() {
             this.classList.add('active');
             document.getElementById(targetTab + 'Tab').classList.add('active');
             
-            // AUTO PLAY VIDEO ketika klik tombol Video Review
+            // TOGGLE PLAY/PAUSE untuk tombol Video Review
             if (targetTab === 'video') {
-                const videoPlayer = document.getElementById('modalVideo');
-                const video = videoPlayer.querySelector('video');
-                const iframe = videoPlayer.querySelector('iframe');
-                
-                // Untuk HTML5 video
-                if (video) {
-                    video.play().catch(e => console.log('Auto-play prevented:', e));
-                }
-                
-                // Untuk YouTube iframe
-                if (iframe) {
-                    const iframeSrc = iframe.src;
-                    iframe.src = iframeSrc + (iframeSrc.includes('?') ? '&autoplay=1' : '?autoplay=1');
-                }
+                toggleVideoPlayback();
             }
         });
     });
+}
+
+// Function untuk toggle play/pause video
+function toggleVideoPlayback() {
+    const videoPlayer = document.getElementById('modalVideo');
+    const video = videoPlayer.querySelector('video');
+    const iframe = videoPlayer.querySelector('iframe');
+    
+    // Untuk HTML5 video
+    if (video) {
+        if (video.paused) {
+            video.play().catch(e => console.log('Play prevented:', e));
+        } else {
+            video.pause();
+        }
+        return;
+    }
+    
+    // Untuk YouTube iframe - pause/play pake API (kalo ada)
+    if (iframe) {
+        // Untuk YouTube, kita restart aja videonya sebagai toggle
+        const originalSrc = iframe.src.replace(/[&?]autoplay=1/g, '');
+        iframe.src = originalSrc + (originalSrc.includes('?') ? '&autoplay=1' : '?autoplay=1');
+    }
 }
 
         // Setup video player
