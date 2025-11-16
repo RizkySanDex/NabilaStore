@@ -963,7 +963,7 @@ function setupVideoPlayer(video) {
         
         videoPlayer.innerHTML = `
             <iframe 
-                width="100%" 
+                width="auto%" 
                 height="auto" 
                 src="${youtubeUrl}" 
                 frameborder="0" 
@@ -974,7 +974,7 @@ function setupVideoPlayer(video) {
     } else if (video.videoUrl.includes('.mp4') || video.videoUrl.includes('vod.susercontent.com')) {
         // SHOPEE VIDEO - FIXED SIZE
         videoPlayer.innerHTML = `
-            <video controls width="100%" height="auto" style="object-fit: contain;">
+            <video controls width="auto%" height="auto" style="object-fit: contain;">
                 <source src="${video.videoUrl}" type="video/mp4">
             </video>
         `;
