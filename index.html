@@ -304,7 +304,17 @@
             color: white;
             flex-shrink: 0;
         }
+/* Hide judul di modal header biar video lebih luas */
+.modal-header h3 {
+    display: none !important;
+}
 
+/* Rapihin modal header jadi cuma tombol close doang */
+.modal-header {
+    justify-content: flex-end;
+    padding: 15px 20px;
+    min-height: auto;
+}
         .close-modal {
             background: none;
             border: none;
