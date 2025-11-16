@@ -563,38 +563,45 @@
 
     // Helper functions untuk extract data dari Blogger post
     function extractThumbnail(post) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(post.content, 'text/html');
-        const firstImg = doc.querySelector('img');
-        return firstImg ? firstImg.src : 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
-    }
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(post.content, 'text/html');
+    const thumbnailElem = doc.querySelector('.thumbnail');
+    if (thumbnailElem) return thumbnailElem.textContent;
+    
+    // Fallback: cari gambar pertama
+    const firstImg = doc.querySelector('img');
+    return firstImg ? firstImg.src : 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
+}
 
-    function extractVideoUrl(post) {
-        const match = post.content.match(/video_url:\s*(https?:\/\/[^\s<]+)/);
-        return match ? match[1] : '';
-    }
+function extractVideoUrl(post) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(post.content, 'text/html');
+    const videoUrlElem = doc.querySelector('.video_url');
+    return videoUrlElem ? videoUrlElem.textContent : '';
+}
 
-    function extractProductLink(post) {
-        const match = post.content.match(/product_link:\s*(https?:\/\/[^\s<]+)/);
-        return match ? match[1] : '#';
-    }
+function extractProductLink(post) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(post.content, 'text/html');
+    const productLinkElem = doc.querySelector('.product_link');
+    return productLinkElem ? productLinkElem.textContent : '#';
+}
 
-    function extractCategory(post) {
-        return post.labels && post.labels.length > 0 ? post.labels[0] : 'Uncategorized';
-    }
+function extractDuration(post) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(post.content, 'text/html');
+    const durationElem = doc.querySelector('.duration');
+    return durationElem ? durationElem.textContent : '10:00';
+}
 
-    function extractDuration(post) {
-        const match = post.content.match(/duration:\s*([^\s<]+)/);
-        return match ? match[1] : '10:00';
+function extractDescription(post) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(post.content, 'text/html');
+    const descriptionElem = doc.querySelector('.video-description');
+    if (descriptionElem) {
+        return descriptionElem.textContent.substring(0, 150) + '...';
     }
-
-    function extractDescription(post) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(post.content, 'text/html');
-        const textContent = doc.body.textContent || post.title;
-        return textContent.substring(0, 150) + '...';
-    }
-
+    return post.title;
     function formatDate(dateString) {
         const date = new Date(dateString);
         const now = new Date();
