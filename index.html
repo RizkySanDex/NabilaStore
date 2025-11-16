@@ -6,417 +6,176 @@
     <title>Shopee Video Gallery</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+    /* === LAYOUT COMPACT === */
+    .video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 2rem;
+    }
 
-        :root {
-            --primary: #ff5314;
-            --secondary: #2a2a2a;
-            --accent: #ffa726;
-            --light: #f5f5f5;
-            --dark: #1a1a1a;
-            --gray: #e0e0e0;
-            --text: #333333;
-        }
+    .video-card {
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
 
-        body {
-            background-color: var(--light);
-            color: var(--text);
-            line-height: 1.6;
-        }
+    .video-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
 
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white;
-            padding: 1.5rem 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+    /* THUMBNAIL COMPACT */
+    .video-thumbnail {
+        position: relative;
+        width: 100%;
+        height: 150px; /* Lebih pendek */
+        overflow: hidden;
+        background: var(--dark);
+    }
 
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+    .video-thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
 
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .video-duration {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 0.7rem;
+    }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+    /* INFO COMPACT */
+    .video-info {
+        padding: 10px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
 
-        .logo i {
-            font-size: 2rem;
-        }
+    .video-info h3 {
+        font-size: 0.85rem;
+        margin-bottom: 6px;
+        line-height: 1.3;
+        height: 32px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
 
-        .logo h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
+    .video-meta {
+        display: flex;
+        justify-content: space-between;
+        color: #666;
+        font-size: 0.75rem;
+        margin-bottom: 8px;
+    }
 
-        .search-bar {
-            display: flex;
-            width: 50%;
-        }
+    .video-price {
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
 
-        .search-bar input {
-            flex: 1;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px 0 0 4px;
-            font-size: 1rem;
-        }
+    /* BUTTONS COMPACT */
+    .video-actions {
+        display: flex;
+        gap: 6px;
+        margin-top: auto;
+    }
 
-        .search-bar button {
-            background: var(--secondary);
-            color: white;
-            border: none;
-            padding: 0 15px;
-            border-radius: 0 4px 4px 0;
-            cursor: pointer;
-        }
+    .video-actions a {
+        flex: 1;
+        text-align: center;
+        padding: 6px 0;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.75rem;
+        transition: all 0.3s;
+    }
 
-        .nav-links {
-            display: flex;
-            gap: 20px;
-        }
+    .watch-btn {
+        background: var(--primary);
+        color: white;
+    }
 
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: opacity 0.3s;
-        }
+    .watch-btn:hover {
+        background: #e0440a;
+    }
 
-        .nav-links a:hover {
-            opacity: 0.8;
-        }
+    .buy-btn {
+        background: var(--secondary);
+        color: white;
+    }
 
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                        url('https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 4rem 0;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
+    .buy-btn:hover {
+        background: #1a1a1a;
+    }
 
-        .hero h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
+    /* HEADER COMPACT */
+    header {
+        padding: 1rem 0;
+    }
 
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 2rem;
-        }
+    .hero {
+        padding: 2rem 0;
+        margin-bottom: 1rem;
+    }
 
-        .cta-button {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
+    .hero h2 {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+    }
 
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
+    .hero p {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
 
-        .filters {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            background: white;
-            border: 1px solid var(--gray);
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 500;
-        }
-
-        .filter-btn.active, .filter-btn:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
+    /* RESPONSIVE */
+    @media (max-width: 1200px) {
         .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
         }
+    }
 
-        .video-card {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .video-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-        }
-
-        .video-thumbnail {
-            position: relative;
-            height: 180px;
-            overflow: hidden;
-        }
-
-        .video-thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-
-        .video-card:hover .video-thumbnail img {
-            transform: scale(1.05);
-        }
-
-        .video-duration {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-        }
-
-        .video-info {
-            padding: 15px;
-        }
-
-        .video-info h3 {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-            height: 50px;
-            overflow: hidden;
-        }
-
-        .video-meta {
-            display: flex;
-            justify-content: space-between;
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 12px;
-        }
-
-        .video-actions {
-            display: flex;
+    @media (max-width: 768px) {
+        .video-grid {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 10px;
         }
-
-        .video-actions a {
-            flex: 1;
-            text-align: center;
-            padding: 8px 0;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
+        
+        .video-thumbnail {
+            height: 120px;
         }
-
-        .watch-btn {
-            background: var(--primary);
-            color: white;
+        
+        .video-info h3 {
+            font-size: 0.8rem;
+            height: 28px;
         }
+    }
 
-        .watch-btn:hover {
-            background: #e0440a;
+    @media (max-width: 480px) {
+        .video-grid {
+            grid-template-columns: repeat(2, 1fr);
         }
-
-        .buy-btn {
-            background: var(--secondary);
-            color: white;
-        }
-
-        .buy-btn:hover {
-            background: #1a1a1a;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: white;
-            width: 90%;
-            max-width: 800px;
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background: var(--secondary);
-            color: white;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .modal-body {
-            padding: 20px;
-        }
-
-        .video-player {
-            width: 100%;
-            height: 400px;
-            background: var(--dark);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            margin-bottom: 20px;
-        }
-
-        .video-details h3 {
-            margin-bottom: 10px;
-        }
-
-        .video-details p {
-            margin-bottom: 15px;
-            color: #666;
-        }
-
-        .product-link {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        footer {
-            background: var(--secondary);
-            color: white;
-            padding: 3rem 0 2rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-
-        .footer-section p, .footer-section a {
-            color: #ccc;
-            margin-bottom: 10px;
-            display: block;
-            text-decoration: none;
-        }
-
-        .footer-section a:hover {
-            color: white;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transition: background 0.3s;
-        }
-
-        .social-links a:hover {
-            background: var(--primary);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #aaa;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .search-bar {
-                width: 100%;
-            }
-            
-            .hero h2 {
-                font-size: 2rem;
-            }
-            
-            .video-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
     <header>
@@ -642,55 +401,56 @@
 
     // Function to display videos
     function displayVideos(videos) {
-        const container = document.getElementById('videoContainer');
-        if (!container) {
-            console.error('Video container not found!');
-            return;
-        }
-        
-        container.innerHTML = '';
-
-        if (videos.length === 0) {
-            container.innerHTML = '<p style="text-align: center; padding: 40px;">Tidak ada video ditemukan</p>';
-            return;
-        }
-
-        videos.forEach(video => {
-            const videoCard = document.createElement('div');
-            videoCard.className = 'video-card';
-            videoCard.innerHTML = `
-                <div class="video-thumbnail">
-                    <img src="${video.thumbnail}" alt="${video.title}" onerror="this.src='https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
-                    <div class="video-duration">${video.duration}</div>
-                </div>
-                <div class="video-info">
-                    <h3>${video.title}</h3>
-                    <div class="video-meta">
-                        <span>${video.views} views</span>
-                        <span>${video.date}</span>
-                    </div>
-                    <div class="video-actions">
-                        <a href="#" class="watch-btn" data-id="${video.id}">
-                            <i class="fas fa-play"></i> Tonton
-                        </a>
-                        <a href="${video.productLink}" class="buy-btn" target="_blank">
-                            <i class="fas fa-shopping-cart"></i> Beli
-                        </a>
-                    </div>
-                </div>
-            `;
-            container.appendChild(videoCard);
-        });
-
-        // Add event listeners to watch buttons
-        document.querySelectorAll('.watch-btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                const videoId = this.getAttribute('data-id');
-                openVideoModal(videoId, videos);
-            });
-        });
+    const container = document.getElementById('videoContainer');
+    if (!container) {
+        console.error('Video container not found!');
+        return;
     }
+    
+    container.innerHTML = '';
+
+    if (videos.length === 0) {
+        container.innerHTML = '<p style="text-align: center; padding: 40px;">Tidak ada produk ditemukan</p>';
+        return;
+    }
+
+    videos.forEach(video => {
+        const videoCard = document.createElement('div');
+        videoCard.className = 'video-card';
+        videoCard.innerHTML = `
+            <div class="video-thumbnail">
+                <img src="${video.thumbnail}" alt="${video.title}" onerror="this.src='https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
+                <div class="video-duration">${video.duration}</div>
+            </div>
+            <div class="video-info">
+                <h3>${video.title}</h3>
+                <div class="video-price">Rp${video.views}</div>
+                <div class="video-meta">
+                    <span>${video.category}</span>
+                    <span>${video.date}</span>
+                </div>
+                <div class="video-actions">
+                    <a href="#" class="watch-btn" data-id="${video.id}">
+                        <i class="fas fa-eye"></i> Lihat
+                    </a>
+                    <a href="${video.productLink}" class="buy-btn" target="_blank">
+                        <i class="fas fa-shopping-cart"></i> Beli
+                    </a>
+                </div>
+            </div>
+        `;
+        container.appendChild(videoCard);
+    });
+
+    // Add event listeners to watch buttons
+    document.querySelectorAll('.watch-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const videoId = this.getAttribute('data-id');
+            openVideoModal(videoId, videos);
+        });
+    });
+}
 
     // Function to open video modal - HYBRID SYSTEM
     function openVideoModal(videoId, videos) {
