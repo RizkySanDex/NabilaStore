@@ -524,8 +524,8 @@
 
     <script>
     // === KONFIGURASI BLOGGER API ===
-    const BLOG_ID = '5725416963670414367'; // Contoh: '12345678901234567890'
-    const API_KEY = 'AIzaSyA8k0Fr9m-7zsC1EzdOjI3kgMR92bJHs_E'; // Contoh: 'AIzaSyAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+    const BLOG_ID = '5725416963670414367';
+    const API_KEY = 'AIzaSyA8k0Fr9m-7zsC1EzdOjI3kgMR92bJHs_E';
 
     // Function untuk load data dari Blogger
     async function loadVideosFromBlogger() {
@@ -550,18 +550,19 @@
                         description: extractDescription(post)
                     };
                 });
+                window.currentVideos = videos;
                 displayVideos(videos);
             }
         } catch (error) {
             console.error('Error loading videos from Blogger:', error);
             // Fallback ke sample data kalo error
+            window.currentVideos = videoData;
             displayVideos(videoData);
         }
     }
 
     // Helper functions untuk extract data dari Blogger post
     function extractThumbnail(post) {
-        // Cari gambar pertama di content
         const parser = new DOMParser();
         const doc = parser.parseFromString(post.content, 'text/html');
         const firstImg = doc.querySelector('img');
@@ -569,34 +570,29 @@
     }
 
     function extractVideoUrl(post) {
-        // Cari video_url di custom field
         const match = post.content.match(/video_url:\s*(https?:\/\/[^\s<]+)/);
-        return match ? match[1] : '#';
+        return match ? match[1] : '';
     }
 
     function extractProductLink(post) {
-        // Cari product_link di custom field
         const match = post.content.match(/product_link:\s*(https?:\/\/[^\s<]+)/);
         return match ? match[1] : '#';
     }
 
     function extractCategory(post) {
-        // Ambil dari labels Blogger
         return post.labels && post.labels.length > 0 ? post.labels[0] : 'Uncategorized';
     }
 
     function extractDuration(post) {
-        // Cari duration di custom field
         const match = post.content.match(/duration:\s*([^\s<]+)/);
         return match ? match[1] : '10:00';
     }
 
     function extractDescription(post) {
-        // Ambil deskripsi dari content (tanpa HTML tags)
         const parser = new DOMParser();
         const doc = parser.parseFromString(post.content, 'text/html');
         const textContent = doc.body.textContent || post.title;
-        return textContent.substring(0, 150) + '...'; // Potong jadi 150 karakter
+        return textContent.substring(0, 150) + '...';
     }
 
     function formatDate(dateString) {
@@ -610,22 +606,6 @@
         if (diffDays < 30) return `${Math.floor(diffDays / 7)} minggu lalu`;
         return `${Math.floor(diffDays / 30)} bulan lalu`;
     }
-
-    // Sample video data (fallback kalo Blogger API gagal)
-    const videoData = [
-        {
-            id: 1,
-            title: "Review iPhone 15 Pro Max - Worth It Gak Sih?",
-            thumbnail: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-            duration: "12:45",
-            category: "Elektronik",
-            views: "245K",
-            date: "2 hari lalu",
-            productLink: "https://shope.ee/iphone15promax",
-            description: "Review lengkap iPhone 15 Pro Max setelah pemakaian 1 minggu. Dari performa, kamera, hingga battery life."
-        }
-        // ... data sample lainnya
-    ];
 
     // Function to display videos
     function displayVideos(videos) {
@@ -669,7 +649,7 @@
         });
     }
 
-    // Function to open video modal
+    // Function to open video modal - HYBRID SYSTEM
     function openVideoModal(videoId, videos) {
         const video = videos.find(v => v.id == videoId);
         if (!video) return;
@@ -678,14 +658,48 @@
         document.getElementById('modalDescription').textContent = video.description;
         document.getElementById('modalProductLink').href = video.productLink;
 
-        // In a real implementation, you would embed the actual Shopee video here
-        document.getElementById('modalVideo').innerHTML = `
-            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
-                <i class="fas fa-play-circle" style="font-size: 3rem; margin-bottom: 10px;"></i>
-                <p>Video akan diputar di sini</p>
-                <p style="font-size: 0.8rem; margin-top: 10px;">(Dalam implementasi nyata, video Shopee akan di-embed)</p>
-            </div>
-        `;
+        // HYBRID SYSTEM: Coba embed video Shopee, kalo gagal kasih opsi redirect
+        const videoPlayer = document.getElementById('modalVideo');
+        
+        if (video.videoUrl) {
+            // Coba embed video Shopee
+            videoPlayer.innerHTML = `
+                <video controls width="100%" height="100%" style="background: #000;">
+                    <source src="${video.videoUrl}" type="video/mp4">
+                    Browser Anda tidak mendukung pemutaran video.
+                </video>
+                <div class="video-fallback" style="display: none; text-align: center; padding: 20px;">
+                    <p>Video tidak dapat diputar</p>
+                    <a href="${video.productLink}" target="_blank" class="product-link">
+                        <i class="fas fa-external-link-alt"></i> Tonton di Shopee
+                    </a>
+                </div>
+            `;
+
+            // Cek kalo video error
+            const videoElem = videoPlayer.querySelector('video');
+            const fallback = videoPlayer.querySelector('.video-fallback');
+            
+            videoElem.addEventListener('error', function() {
+                videoElem.style.display = 'none';
+                fallback.style.display = 'block';
+            });
+
+            videoElem.addEventListener('load', function() {
+                fallback.style.display = 'none';
+            });
+        } else {
+            // Kalo ga ada videoUrl, langsung kasih opsi redirect
+            videoPlayer.innerHTML = `
+                <div style="text-align: center; padding: 50px; background: #000; color: white; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <i class="fas fa-play-circle" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                    <p>Video tidak tersedia</p>
+                    <a href="${video.productLink}" target="_blank" class="product-link" style="margin-top: 20px;">
+                        <i class="fas fa-external-link-alt"></i> Tonton di Shopee
+                    </a>
+                </div>
+            `;
+        }
 
         document.getElementById('videoModal').style.display = 'flex';
     }
@@ -705,12 +719,10 @@
     // Filter functionality
     document.querySelectorAll('.filter-btn').forEach(button => {
         button.addEventListener('click', function() {
-            // Remove active class from all buttons
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             
-            // Add active class to clicked button
             this.classList.add('active');
             
             const filter = this.textContent;
