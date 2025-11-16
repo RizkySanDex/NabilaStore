@@ -524,8 +524,8 @@
 
     <script>
     // === KONFIGURASI BLOGGER API ===
-    const BLOG_ID = '5725416963670414367';
-    const API_KEY = 'AIzaSyA8k0Fr9m-7zsC1EzdOjI3kgMR92bJHs_E';
+    const BLOG_ID = 'GANTI_DENGAN_BLOG_ID_LO';
+    const API_KEY = 'GANTI_DENGAN_API_KEY_LO';
 
     // Function untuk load data dari Blogger
     async function loadVideosFromBlogger() {
@@ -561,47 +561,58 @@
         }
     }
 
-    // Helper functions untuk extract data dari Blogger post
+    // Helper functions untuk extract data dari Blogger post (VERSI FIX)
     function extractThumbnail(post) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(post.content, 'text/html');
-    const thumbnailElem = doc.querySelector('.thumbnail');
-    if (thumbnailElem) return thumbnailElem.textContent;
-    
-    // Fallback: cari gambar pertama
-    const firstImg = doc.querySelector('img');
-    return firstImg ? firstImg.src : 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
-}
-
-function extractVideoUrl(post) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(post.content, 'text/html');
-    const videoUrlElem = doc.querySelector('.video_url');
-    return videoUrlElem ? videoUrlElem.textContent : '';
-}
-
-function extractProductLink(post) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(post.content, 'text/html');
-    const productLinkElem = doc.querySelector('.product_link');
-    return productLinkElem ? productLinkElem.textContent : '#';
-}
-
-function extractDuration(post) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(post.content, 'text/html');
-    const durationElem = doc.querySelector('.duration');
-    return durationElem ? durationElem.textContent : '10:00';
-}
-
-function extractDescription(post) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(post.content, 'text/html');
-    const descriptionElem = doc.querySelector('.video-description');
-    if (descriptionElem) {
-        return descriptionElem.textContent.substring(0, 150) + '...';
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(post.content, 'text/html');
+        
+        // Cari di metadata dulu
+        const thumbnailElem = doc.querySelector('.thumbnail');
+        if (thumbnailElem && thumbnailElem.textContent) {
+            return thumbnailElem.textContent.trim();
+        }
+        
+        // Fallback: cari gambar pertama di konten
+        const firstImg = doc.querySelector('img');
+        return firstImg ? firstImg.src : 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
     }
-    return post.title;
+
+    function extractVideoUrl(post) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(post.content, 'text/html');
+        const videoUrlElem = doc.querySelector('.video_url');
+        return videoUrlElem ? videoUrlElem.textContent.trim() : '';
+    }
+
+    function extractProductLink(post) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(post.content, 'text/html');
+        const productLinkElem = doc.querySelector('.product_link');
+        return productLinkElem ? productLinkElem.textContent.trim() : '#';
+    }
+
+    function extractCategory(post) {
+        return post.labels && post.labels.length > 0 ? post.labels[0] : 'Uncategorized';
+    }
+
+    function extractDuration(post) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(post.content, 'text/html');
+        const durationElem = doc.querySelector('.duration');
+        return durationElem ? durationElem.textContent.trim() : '10:00';
+    }
+
+    function extractDescription(post) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(post.content, 'text/html');
+        const descriptionElem = doc.querySelector('.video-description');
+        if (descriptionElem) {
+            const text = descriptionElem.textContent || '';
+            return text.substring(0, 150) + (text.length > 150 ? '...' : '');
+        }
+        return post.title || 'No description available';
+    }
+
     function formatDate(dateString) {
         const date = new Date(dateString);
         const now = new Date();
@@ -614,17 +625,42 @@ function extractDescription(post) {
         return `${Math.floor(diffDays / 30)} bulan lalu`;
     }
 
+    // Sample video data (fallback kalo Blogger API gagal)
+    const videoData = [
+        {
+            id: 1,
+            title: "Review iPhone 15 Pro Max - Worth It Gak Sih?",
+            thumbnail: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            duration: "12:45",
+            category: "Elektronik",
+            views: "245K",
+            date: "2 hari lalu",
+            productLink: "https://shope.ee/iphone15promax",
+            description: "Review lengkap iPhone 15 Pro Max setelah pemakaian 1 minggu. Dari performa, kamera, hingga battery life."
+        }
+    ];
+
     // Function to display videos
     function displayVideos(videos) {
         const container = document.getElementById('videoContainer');
+        if (!container) {
+            console.error('Video container not found!');
+            return;
+        }
+        
         container.innerHTML = '';
+
+        if (videos.length === 0) {
+            container.innerHTML = '<p style="text-align: center; padding: 40px;">Tidak ada video ditemukan</p>';
+            return;
+        }
 
         videos.forEach(video => {
             const videoCard = document.createElement('div');
             videoCard.className = 'video-card';
             videoCard.innerHTML = `
                 <div class="video-thumbnail">
-                    <img src="${video.thumbnail}" alt="${video.title}">
+                    <img src="${video.thumbnail}" alt="${video.title}" onerror="this.src='https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
                     <div class="video-duration">${video.duration}</div>
                 </div>
                 <div class="video-info">
@@ -675,9 +711,10 @@ function extractDescription(post) {
                     <source src="${video.videoUrl}" type="video/mp4">
                     Browser Anda tidak mendukung pemutaran video.
                 </video>
-                <div class="video-fallback" style="display: none; text-align: center; padding: 20px;">
+                <div class="video-fallback" style="display: none; text-align: center; padding: 20px; background: #000; color: white; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 10px;"></i>
                     <p>Video tidak dapat diputar</p>
-                    <a href="${video.productLink}" target="_blank" class="product-link">
+                    <a href="${video.productLink}" target="_blank" class="product-link" style="margin-top: 10px;">
                         <i class="fas fa-external-link-alt"></i> Tonton di Shopee
                     </a>
                 </div>
@@ -687,14 +724,16 @@ function extractDescription(post) {
             const videoElem = videoPlayer.querySelector('video');
             const fallback = videoPlayer.querySelector('.video-fallback');
             
-            videoElem.addEventListener('error', function() {
-                videoElem.style.display = 'none';
-                fallback.style.display = 'block';
-            });
+            if (videoElem) {
+                videoElem.addEventListener('error', function() {
+                    videoElem.style.display = 'none';
+                    fallback.style.display = 'flex';
+                });
 
-            videoElem.addEventListener('load', function() {
-                fallback.style.display = 'none';
-            });
+                videoElem.addEventListener('loadeddata', function() {
+                    fallback.style.display = 'none';
+                });
+            }
         } else {
             // Kalo ga ada videoUrl, langsung kasih opsi redirect
             videoPlayer.innerHTML = `
