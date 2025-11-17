@@ -39,7 +39,7 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 
 .video-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+    grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
     gap:18px;
 }
 .video-card{
@@ -70,7 +70,14 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 }
 
 .video-info{padding:12px}
-.video-info h3{height:44px;font-size:1rem;overflow:hidden;margin-bottom:8px}
+.video-info h3{
+    height:32px;
+    font-size:0.78rem;
+    font-weight:400;
+    overflow:hidden;
+    margin-bottom:4px;
+    line-height:1.25;
+}
 .video-meta{
     display:flex;justify-content:space-between;font-size:0.85rem;color:#777;
     margin-bottom:10px
@@ -306,7 +313,7 @@ function renderList(list){
             </div>
             <div class="video-info">
                 <h3>${v.title}</h3>
-                <div class="video-meta"><span>0 views</span><span>hari ini</span></div>
+                <div class="video-meta"><span>Harga</span></div>
                 <div class="video-actions">
                     <a href="#" class="watch-btn" data-id="${v.id}">Tonton</a>
                     <a class="buy-btn" href="${v.productLink}" target="_blank">Beli</a>
