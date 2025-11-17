@@ -1,188 +1,181 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Shopee Video - Minimal</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopee Video – FIX POSTER SAMPING 100%</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-/* Reset & vars */
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-    --primary:#ff5314;
-    --secondary:#2a2a2a;
-    --light:#f7f7f7;
-    --text:#222;
-    --card:#fff;
-    --muted:#777;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 body{
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background:var(--light);
-    color:var(--text);
-    line-height:1.5;
-    min-height:100vh;
+    font-family:"Segoe UI",Arial,sans-serif;
+    background:#f7f7f7;
+    color:#222;
 }
 
-/* Container */
-.container{width:94%;max-width:1150px;margin:18px auto}
-
-/* Header minimal */
-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0}
-.logo{display:flex;align-items:center;gap:10px}
-.logo i{font-size:1.6rem;color:var(--primary)}
+.container{width:94%;max-width:1150px;margin:20px auto}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.logo{display:flex;align-items:center;gap:8px}
+.logo i{font-size:1.6rem;color:#ff5314}
 .logo h1{font-size:1.1rem;font-weight:700}
-.search-bar{flex:1;display:flex;max-width:520px;margin-left:10px}
-.search-bar input{flex:1;padding:9px 12px;border-radius:6px 0 0 6px;border:1px solid #e3e3e3;font-size:0.95rem}
-.search-bar button{padding:0 12px;border:none;background:var(--secondary);color:#fff;border-radius:0 6px 6px 0;cursor:pointer}
-.nav-links{display:flex;gap:10px}
-.nav-links a{font-size:0.9rem;color:var(--muted);text-decoration:none;padding:6px 8px;border-radius:6px}
-.nav-links a:hover{background:#fff;border:1px solid #eee}
 
-/* Filters */
-.filters{display:flex;gap:8px;margin:14px 0;flex-wrap:wrap}
-.filter-btn{background:var(--card);border:1px solid #eee;padding:8px 14px;border-radius:20px;cursor:pointer;font-weight:600;color:var(--muted)}
-.filter-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.search-bar{flex:1;display:flex;max-width:520px;margin-left:12px}
+.search-bar input{
+    flex:1;padding:9px 12px;border:1px solid #ddd;border-radius:6px 0 0 6px
+}
+.search-bar button{
+    background:#2a2a2a;color:white;padding:0 14px;border-radius:0 6px 6px 0;
+}
 
-/* Grid */
-.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-bottom:40px}
-.video-card{background:var(--card);border-radius:10px;overflow:hidden;box-shadow:0 6px 18px rgba(8,8,8,0.04);transition:transform .18s}
+.nav-links a{margin-left:12px;color:#777;text-decoration:none;font-size:.9rem}
+
+.filters{display:flex;gap:8px;margin:14px 0}
+.filter-btn{
+    padding:8px 14px;border:1px solid #eee;border-radius:20px;background:#fff;
+    cursor:pointer;color:#666;font-weight:600;font-size:0.87rem
+}
+.filter-btn.active{background:#ff5314;color:#fff;border-color:#ff5314}
+
+.video-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+    gap:18px;
+}
+.video-card{
+    background:white;
+    border-radius:12px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.06);
+    overflow:hidden;
+    transition:.2s;
+}
 .video-card:hover{transform:translateY(-6px)}
-.video-thumb{position:relative;height:0;padding-bottom:56.25%;overflow:hidden;background:#111}
+
+.video-thumb{position:relative;height:0;padding-bottom:56%}
 .video-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.video-duration{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.65);color:#fff;padding:4px 8px;border-radius:6px;font-size:12px}
+.video-duration{
+    position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.6);
+    color:white;padding:3px 7px;font-size:12px;border-radius:6px
+}
+
 .video-info{padding:12px}
-.video-info h3{font-size:0.98rem;margin-bottom:8px;height:42px;overflow:hidden}
-.video-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:0.85rem;margin-bottom:10px}
+.video-info h3{height:44px;font-size:1rem;overflow:hidden;margin-bottom:8px}
+.video-meta{
+    display:flex;justify-content:space-between;font-size:0.85rem;color:#777;
+    margin-bottom:10px
+}
 .video-actions{display:flex;gap:8px}
-.video-actions a{flex:1;text-align:center;padding:9px;border-radius:8px;font-weight:600;text-decoration:none}
-.watch-btn{background:var(--primary);color:#fff}
-.buy-btn{background:var(--secondary);color:#fff}
-
-/* Empty */
-.empty{padding:40px;text-align:center;color:var(--muted)}
-
-/* Modal overlay */
-.modal {
-    position: fixed;
-    inset: 0;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,0.6);
-    z-index: 1200;
-    padding: 20px;
+.watch-btn,.buy-btn{
+    flex:1;text-align:center;padding:8px;border-radius:6px;text-decoration:none;
+    font-weight:700;color:white
 }
-.modal.open { display: flex; }
+.watch-btn{background:#ff5314}
+.buy-btn{background:#2a2a2a}
 
-.modal-box {
-    width: 100%;
-    max-width: 980px;
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+.modal{
+    position:fixed;inset:0;
+    background:rgba(0,0,0,.65);
+    display:none;align-items:center;justify-content:center;
+    padding:20px;z-index:1500;
+}
+.modal.open{display:flex}
+
+.modal-box{
+    background:white;width:100%;max-width:1180px;
+    border-radius:12px;overflow:hidden;
+    position:relative;box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+.modal-close{
+    position:absolute;top:16px;right:16px;
+    width:40px;height:40px;border-radius:50%;
+    background:rgba(0,0,0,.45);color:white;
+    font-size:20px;display:flex;align-items:center;justify-content:center;
+    cursor:pointer;border:none;z-index:10;
+}
+
+.modal-content-row{
     display:flex;
-    flex-direction:column;
+    gap:6px;        /* FIX SUPER RAPAT */
+    padding:10px;   /* FIX SUPER RAPAT */
 }
+.modal-left{flex:2}
+.modal-right{flex:1;display:grid;gap:6px}
 
-/* Close button overlay */
-.modal-close {
-    position:absolute;
-    right: 28px;
-    top: 28px;
-    width:40px;
-    height:40px;
-    border-radius:999px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background: rgba(0,0,0,0.45);
-    color:white;
-    border:none;
-    cursor:pointer;
-    font-size:18px;
+.modal-video-wrap{
+    position:relative;width:100%;aspect-ratio:16/9;background:black;
 }
-
-/* Video 16:9 */
-.modal-video-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#000}
 .modal-video-wrap iframe,
-.modal-video-wrap video{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:contain}
-
-/* Details */
-.modal-details{padding:14px 16px;display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;border-top:1px solid #f1f1f1}
-.modal-details .desc{flex:1;min-width:220px}
-.modal-details h3{font-size:1rem;margin-bottom:6px}
-.modal-details p{color:var(--muted);font-size:0.92rem;margin-bottom:10px}
-.modal-actions{display:flex;gap:8px}
-.product-link{background:var(--primary);color:#fff;padding:9px 14px;border-radius:8px;text-decoration:none;font-weight:700}
-
-/* Gallery small */
-.image-gallery{display:flex;gap:8px;overflow:auto;padding:6px 0}
-.image-gallery img{height:55px;border-radius:6px;cursor:pointer;object-fit:cover}
-
-/* IMAGE VIEWER POPUP */
-.img-viewer {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-}
-.img-viewer.open { display: flex; }
-.img-viewer img {
-    max-width: 88%;
-    max-height: 88%;
-    border-radius: 10px;
-    object-fit: contain;
+.modal-video-wrap video{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border:0;
 }
 
-/* Next Prev */
-.img-viewer-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 32px;
-    color: #fff;
-    background: rgba(0,0,0,0.5);
-    border: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 999px;
-    cursor: pointer;
+/* POSTER GRID RAPAT 100% */
+.image-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,95px);
+    grid-auto-rows:95px;
+    gap:6px;
+    justify-content:start;
 }
-.img-prev { left: 20px; }
-.img-next { right: 20px; }
-
-/* Close */
-.img-viewer-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 32px;
-    background: rgba(0,0,0,0.5);
-    color: #fff;
-    border: none;
-    width: 48px;
-    height: 48px;
-    border-radius: 999px;
-    cursor: pointer;
+.image-grid img{
+    width:95px;height:95px;
+    object-fit:cover;
+    border-radius:8px;
+    cursor:pointer;
+    border:1px solid #eee;
+    background:#f3f3f3;
 }
 
-@media (max-width:720px){
-    .modal-box{max-width:94%}
-    .modal-close{right:16px;top:16px}
+.modal-details{
+    padding:10px 16px 14px;
+    border-top:1px solid #eee;
+    margin-top:-4px;
+}
+.modal-details h3{font-size:1.1rem;margin-bottom:4px}
+.modal-details p{color:#555;font-size:0.9rem;margin-bottom:6px;line-height:1.32}
+.product-link{
+    display:inline-block;padding:10px 16px;background:#ff5314;
+    color:white;border-radius:8px;font-weight:700;text-decoration:none;margin-top:4px
+}
+
+.img-viewer{
+    position:fixed;inset:0;background:rgba(0,0,0,.85);
+    display:none;align-items:center;justify-content:center;
+    z-index:3000;
+}
+.img-viewer.open{display:flex}
+
+.img-viewer img{
+    max-width:90%;max-height:90%;border-radius:10px;object-fit:contain;
+}
+
+.img-viewer-btn{
+    position:absolute;top:50%;transform:translateY(-50%);
+    background:rgba(0,0,0,.6);color:white;
+    width:50px;height:50px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:28px;border:none;cursor:pointer;
+}
+.img-prev{left:20px}
+.img-next{right:20px}
+
+.img-viewer-close{
+    position:absolute;top:20px;right:20px;
+    width:45px;height:45px;border-radius:50%;
+    font-size:28px;background:rgba(0,0,0,.6);color:white;border:none;cursor:pointer
+}
+
+@media(max-width:768px){
+    .modal-content-row{flex-direction:column}
 }
 </style>
 </head>
-<body>
 
+<body>
 <div class="container">
     <header>
-        <div style="display:flex;align-items:center;gap:8px;">
+        <div style="display:flex;align-items:center;gap:10px;">
             <div class="logo"><i class="fas fa-play-circle"></i><h1>ShopeeVideo</h1></div>
             <div class="search-bar">
                 <input id="searchInput" type="text" placeholder="Cari video...">
@@ -190,44 +183,41 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;pa
             </div>
         </div>
         <nav class="nav-links">
-            <a href="#">Beranda</a>
-            <a href="#">Kategori</a>
+            <a>Beranda</a>
+            <a>Kategori</a>
         </nav>
     </header>
 
     <div class="filters">
         <button class="filter-btn active">Semua</button>
-        <button class="filter-btn">Elektronik</button>
         <button class="filter-btn">Fashion</button>
+        <button class="filter-btn">Elektronik</button>
         <button class="filter-btn">Kecantikan</button>
-        <button class="filter-btn">Rumah Tangga</button>
-        <button class="filter-btn">Hobi</button>
     </div>
 
     <div id="videoContainer" class="video-grid"></div>
-    <div id="emptyState" class="empty" style="display:none">Tidak ada produk ditemukan</div>
 </div>
 
-<!-- MODAL VIDEO -->
+<!-- MODAL -->
 <div id="videoModal" class="modal">
     <div class="modal-box" id="modalBox">
-        <div class="modal-video-wrap" id="modalVideo"></div>
+        <button class="modal-close" id="closeModal">&times;</button>
 
-        <div class="modal-details">
-            <div class="desc">
-                <h3 id="modalTitle"></h3>
-                <p id="modalDescription"></p>
-                <div class="image-gallery" id="imageGallery"></div>
+        <div class="modal-content-row">
+            <div class="modal-left">
+                <div class="modal-video-wrap" id="modalVideo"></div>
             </div>
-
-            <div>
-                <a id="modalProductLink" class="product-link" target="_blank">Lihat Produk</a>
-                <div id="modalMeta" style="margin-top:8px;color:#777;font-size:0.9rem"></div>
+            <div class="modal-right">
+                <div class="image-grid" id="imageGallery"></div>
             </div>
         </div>
-    </div>
 
-    <button class="modal-close" id="closeModal">&times;</button>
+        <div class="modal-details">
+            <h3 id="modalTitle"></h3>
+            <p id="modalDescription"></p>
+            <a id="modalProductLink" class="product-link" target="_blank">Lihat Produk</a>
+        </div>
+    </div>
 </div>
 
 <!-- IMAGE VIEWER -->
@@ -238,282 +228,138 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;pa
     <button class="img-viewer-close" id="imgViewerClose">&times;</button>
 </div>
 
-
 <script>
-/* ============================== */
-/* BLOGGER API CONFIG             */
-/* ============================== */
-const BLOG_ID = '5725416963670414367';
-const API_KEY = 'AIzaSyA8k0Fr9m-7zsC1EzdOjI3kgMR92bJHs_E';
+const BLOG_ID = "5725416963670414367";
+const API_KEY = "AIzaSyA8k0Fr9m-7zsC1EzdOjI3kgMR92bJHs_E";
 
+const videoContainer = document.getElementById("videoContainer");
+let currentVideos = [];
 function parseHTML(post){
-    try {
-        const c = post.content || post;
-        return new DOMParser().parseFromString(c, 'text/html');
-    } catch(e){ return new DOMParser().parseFromString('', 'text/html'); }
+    return new DOMParser().parseFromString(post.content || "", "text/html");
 }
 
-function extractThumbnail(post){
-    try{
-        const doc = parseHTML(post);
-        const c = doc.querySelector('.thumbnail')?.textContent?.trim();
-        if(c) return c;
-        const img = doc.querySelector('img');
-        if(img) return img.src;
-    }catch(e){}
-    return "https://images.unsplash.com/photo-1611224923853-80b023f02d71?auto=format&fit=crop&w=500&q=80";
+function extractThumbnail(p){
+    const doc = parseHTML(p);
+    return doc.querySelector(".thumbnail")?.textContent?.trim() ||
+           doc.querySelector("img")?.src ||
+           "https://via.placeholder.com/600x800?text=No+Image";
+}
+function extractVideoUrl(p){
+    const doc = parseHTML(p);
+    return doc.querySelector(".video_url")?.textContent?.trim() ||
+           doc.querySelector("iframe")?.src || "";
+}
+function extractDescription(p){
+    const doc = parseHTML(p);
+    return doc.querySelector(".video-description")?.textContent?.trim() || "";
+}
+function extractProductLink(p){
+    const doc = parseHTML(p);
+    return doc.querySelector(".product_link")?.textContent?.trim() ||
+           doc.querySelector("a[href*='shopee']")?.href || "#";
+}
+function extractGallery(p){
+    const doc = parseHTML(p);
+    const raw = doc.querySelector(".gallery")?.textContent?.trim();
+    if(!raw) return [];
+    return raw.split(",").map(x=>x.trim()).filter(x=>x.length>5);
 }
 
-function extractVideoUrl(post){
-    const doc = parseHTML(post);
-    const v = doc.querySelector('.video_url')?.textContent?.trim();
-    if(v) return v;
-    const iframe = doc.querySelector('iframe');
-    if(iframe) return iframe.src;
-    const a = doc.querySelector('a[href*=".mp4"], a[href*="youtu"]');
-    if(a) return a.href;
-    return '';
+async function loadVideos(){
+    const url = `https://www.googleapis.com/blogger/v3/blogs/${BLOG_ID}/posts?key=${API_KEY}&maxResults=30`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    currentVideos = data.items.map(p=>({
+        id:p.id,
+        title:p.title,
+        thumbnail:extractThumbnail(p),
+        videoUrl:extractVideoUrl(p),
+        productLink:extractProductLink(p),
+        description:extractDescription(p),
+        gallery:extractGallery(p)
+    }));
+
+    renderList(currentVideos);
 }
 
-function extractProductLink(post){
-    const doc = parseHTML(post);
-    const link = doc.querySelector('.product_link')?.textContent?.trim();
-    if(link) return link;
-    const a = doc.querySelector('a[href*="shopee"]');
-    if(a) return a.href;
-    return '#';
-}
-
-function extractCategory(post){
-    return post.labels?.[0] || "Uncategorized";
-}
-
-function extractDuration(post){
-    const doc = parseHTML(post);
-    return doc.querySelector('.duration')?.textContent?.trim() || "10:00";
-}
-
-function extractDescription(post){
-    const doc = parseHTML(post);
-    const d = doc.querySelector('.video-description')?.textContent;
-    if(d) return d.length>160? d.substring(0,160)+'...' : d;
-    return post.title;
-}
-
-function extractGallery(post){
-    const doc = parseHTML(post);
-    const g = doc.querySelector('.gallery');
-    if(g?.textContent){
-        return g.textContent.split(',').map(s=>s.trim()).filter(Boolean);
-    }
-    return Array.from(doc.querySelectorAll("img")).map(i=>i.src);
-}
-
-function formatDate(date){
-    const d = new Date(date);
-    const now = new Date();
-    const diff = Math.floor((now - d)/(1000*60*60*24));
-    if(diff <= 0) return "hari ini";
-    if(diff === 1) return "1 hari lalu";
-    if(diff < 7) return diff+" hari lalu";
-    if(diff < 30) return Math.floor(diff/7)+" minggu lalu";
-    return Math.floor(diff/30)+" bulan lalu";
-}
-
-/* ============================== */
-/* DISPLAY GRID                   */
-/* ============================== */
-function displayVideos(list){
-    const container = document.getElementById('videoContainer');
-    const empty = document.getElementById('emptyState');
-    container.innerHTML = "";
-
-    if(!list.length){
-        empty.style.display = 'block';
-        return;
-    }
-    empty.style.display = 'none';
-
+function renderList(list){
+    videoContainer.innerHTML = "";
     list.forEach(v=>{
-        const el = document.createElement('div');
-        el.className = "video-card";
-        el.innerHTML = `
+        const card = document.createElement("div");
+        card.className = "video-card";
+        card.innerHTML = `
             <div class="video-thumb">
                 <img src="${v.thumbnail}">
-                <div class="video-duration">${v.duration}</div>
+                <div class="video-duration">Video</div>
             </div>
             <div class="video-info">
                 <h3>${v.title}</h3>
-                <div class="video-meta">
-                    <span>${v.views}</span>
-                    <span>${v.date}</span>
-                </div>
+                <div class="video-meta"><span>0 views</span><span>hari ini</span></div>
                 <div class="video-actions">
                     <a href="#" class="watch-btn" data-id="${v.id}">Tonton</a>
-                    <a href="${v.productLink}" target="_blank" class="buy-btn">Beli</a>
+                    <a class="buy-btn" href="${v.productLink}" target="_blank">Beli</a>
                 </div>
-            </div>
-        `;
-        el.querySelector(".watch-btn").onclick = (e)=>{
+            </div>`;
+
+        card.querySelector(".watch-btn").onclick = e=>{
             e.preventDefault();
-            openVideoModal(v.id);
+            openModal(v.id);
         };
-        container.appendChild(el);
+        videoContainer.appendChild(card);
     });
 }
 
-/* ============================== */
-/* LOAD VIDEOS                    */
-/* ============================== */
-let currentVideos = [];
-
-async function loadVideosFromBlogger(){
-    try{
-        const url = `https://www.googleapis.com/blogger/v3/blogs/${BLOG_ID}/posts?key=${API_KEY}&maxResults=20`;
-        const res = await fetch(url);
-        const data = await res.json();
-
-        if(data.items){
-            currentVideos = data.items.map(p=>({
-                id: p.id,
-                title: p.title,
-                thumbnail: extractThumbnail(p),
-                videoUrl: extractVideoUrl(p),
-                productLink: extractProductLink(p),
-                category: extractCategory(p),
-                duration: extractDuration(p),
-                views: "0 views",
-                date: formatDate(p.published),
-                description: extractDescription(p),
-                raw: p
-            }));
-            displayVideos(currentVideos);
-        }
-    }catch(e){
-        console.log("Blogger error",e);
-    }
-}
-
-/* ============================== */
-/* MODAL PLAYER                   */
-/* ============================== */
-function openVideoModal(id){
-    const v = currentVideos.find(x=>x.id == id);
-    if(!v) return;
+function openModal(id){
+    const v = currentVideos.find(x=>x.id===id);
 
     document.getElementById("modalTitle").textContent = v.title;
     document.getElementById("modalDescription").textContent = v.description;
     document.getElementById("modalProductLink").href = v.productLink;
-    document.getElementById("modalMeta").textContent = v.views+" • "+v.date;
+    document.getElementById("modalVideo").innerHTML = `<iframe src="${v.videoUrl}?autoplay=1" allowfullscreen></iframe>`;
 
-    const gallery = extractGallery(v.raw);
-    let galleryHTML = "";
-    gallery.forEach((src,i)=>{
-        galleryHTML += `<img src="${src}" data-index="${i}">`;
+    const grid = document.getElementById("imageGallery");
+    grid.innerHTML = "";
+    v.gallery.forEach((src,i)=>{
+        const img = document.createElement("img");
+        img.src = src;
+        img.onclick = ()=>openImageViewer(i,v.gallery);
+        grid.appendChild(img);
     });
-    document.getElementById("imageGallery").innerHTML = galleryHTML;
-
-    // CLICK → IMAGE VIEWER
-    document.querySelectorAll("#imageGallery img").forEach(img=>{
-        img.onclick = ()=>{
-            currentGallery = gallery;
-            openImageViewer(parseInt(img.dataset.index));
-        };
-    });
-
-    // VIDEO PLAYER
-    const wrap = document.getElementById("modalVideo");
-    wrap.innerHTML = "";
-    let src = v.videoUrl;
-
-    // Convert youtu.be
-    if(src.includes("youtu.be")){
-        const id = src.split("youtu.be/")[1];
-        src = "https://www.youtube.com/embed/"+id;
-    }
-    if(src.includes("watch?v=")){
-        const id = src.split("watch?v=")[1];
-        src = "https://www.youtube.com/embed/"+id;
-    }
-
-    if(src.includes("youtube")){
-        wrap.innerHTML = `<iframe src="${src}?autoplay=1&rel=0"></iframe>`;
-    }else if(src.endsWith(".mp4")){
-        wrap.innerHTML = `<video controls autoplay src="${src}"></video>`;
-    }
 
     document.getElementById("videoModal").classList.add("open");
 }
 
 document.getElementById("closeModal").onclick = ()=>{
     document.getElementById("videoModal").classList.remove("open");
-    document.getElementById("modalVideo").innerHTML = "";
+    document.getElementById("modalVideo").innerHTML="";
 };
 
-document.getElementById("videoModal").onclick = (e)=>{
-    const box = document.getElementById("modalBox");
-    if(!box.contains(e.target) && e.target.id !== "closeModal"){
-        document.getElementById("closeModal").click();
-    }
-};
+let currentGallery=[];
+let currentIndex=0;
 
-/* ============================== */
-/* IMAGE VIEWER NEXT PREV         */
-/* ============================== */
-let currentGallery = [];
-let currentIndex = 0;
-
-function openImageViewer(index){
-    currentIndex = index;
-    document.getElementById("imgViewerImg").src = currentGallery[currentIndex];
+function openImageViewer(i,gallery){
+    currentGallery = gallery;
+    currentIndex = i;
+    document.getElementById("imgViewerImg").src = gallery[i];
     document.getElementById("imgViewer").classList.add("open");
-}
-
-function closeImageViewer(){
-    document.getElementById("imgViewer").classList.remove("open");
 }
 
 document.getElementById("imgPrev").onclick = ()=>{
     currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
-    document.getElementById("imgViewerImg").src = currentGallery[currentIndex];
+    imgViewerImg.src = currentGallery[currentIndex];
 };
 
 document.getElementById("imgNext").onclick = ()=>{
     currentIndex = (currentIndex + 1) % currentGallery.length;
-    document.getElementById("imgViewerImg").src = currentGallery[currentIndex];
+    imgViewerImg.src = currentGallery[currentIndex];
 };
 
-document.getElementById("imgViewerClose").onclick = closeImageViewer;
-
-document.getElementById("imgViewer").onclick = (e)=>{
-    if(e.target.id === "imgViewer") closeImageViewer();
+document.getElementById("imgViewerClose").onclick = ()=>{
+    document.getElementById("imgViewer").classList.remove("open");
 };
 
-/* ============================== */
-/* FILTERS & SEARCH               */
-/* ============================== */
-document.querySelectorAll(".filter-btn").forEach(btn=>{
-    btn.onclick = ()=>{
-        document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
-        btn.classList.add("active");
-
-        const f = btn.textContent;
-        if(f==="Semua") return displayVideos(currentVideos);
-        displayVideos(currentVideos.filter(v=>v.category===f));
-    };
-});
-
-document.getElementById("searchInput").oninput = function(){
-    const q = this.value.toLowerCase();
-    const list = currentVideos.filter(v=>(
-        v.title.toLowerCase().includes(q) ||
-        v.description.toLowerCase().includes(q)
-    ));
-    displayVideos(list);
-};
-
-/* START */
-loadVideosFromBlogger();
+loadVideos();
 </script>
 </body>
 </html>
