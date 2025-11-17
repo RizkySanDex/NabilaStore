@@ -5,511 +5,515 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Shopee Video - Minimal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Reset & vars */
-        *{box-sizing:border-box;margin:0;padding:0}
-        :root{
-            --primary:#ff5314;
-            --secondary:#2a2a2a;
-            --light:#f7f7f7;
-            --text:#222;
-            --card:#fff;
-            --muted:#777;
-        }
-        body{
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background:var(--light);
-            color:var(--text);
-            -webkit-font-smoothing:antialiased;
-            -moz-osx-font-smoothing:grayscale;
-            line-height:1.5;
-            min-height:100vh;
-        }
 
-        /* Container */
-        .container{width:94%;max-width:1150px;margin:18px auto}
+<style>
+/* Reset & vars */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+    --primary:#ff5314;
+    --secondary:#2a2a2a;
+    --light:#f7f7f7;
+    --text:#222;
+    --card:#fff;
+    --muted:#777;
+}
+body{
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background:var(--light);
+    color:var(--text);
+    line-height:1.5;
+    min-height:100vh;
+}
 
-        /* Simple header (minimal) */
-        header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0}
-        .logo{display:flex;align-items:center;gap:10px}
-        .logo i{font-size:1.6rem;color:var(--primary)}
-        .logo h1{font-size:1.1rem;font-weight:700}
-        .search-bar{flex:1;display:flex;max-width:520px;margin-left:10px}
-        .search-bar input{flex:1;padding:9px 12px;border-radius:6px 0 0 6px;border:1px solid #e3e3e3;font-size:0.95rem}
-        .search-bar button{padding:0 12px;border:none;background:var(--secondary);color:#fff;border-radius:0 6px 6px 0;cursor:pointer}
-        .nav-links{display:flex;gap:10px}
-        .nav-links a{font-size:0.9rem;color:var(--muted);text-decoration:none;padding:6px 8px;border-radius:6px}
-        .nav-links a:hover{background:#fff;border:1px solid #eee}
+/* Container */
+.container{width:94%;max-width:1150px;margin:18px auto}
 
-        /* Filters */
-        .filters{display:flex;gap:8px;margin:14px 0;flex-wrap:wrap}
-        .filter-btn{background:var(--card);border:1px solid #eee;padding:8px 14px;border-radius:20px;cursor:pointer;font-weight:600;color:var(--muted)}
-        .filter-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+/* Header minimal */
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0}
+.logo{display:flex;align-items:center;gap:10px}
+.logo i{font-size:1.6rem;color:var(--primary)}
+.logo h1{font-size:1.1rem;font-weight:700}
+.search-bar{flex:1;display:flex;max-width:520px;margin-left:10px}
+.search-bar input{flex:1;padding:9px 12px;border-radius:6px 0 0 6px;border:1px solid #e3e3e3;font-size:0.95rem}
+.search-bar button{padding:0 12px;border:none;background:var(--secondary);color:#fff;border-radius:0 6px 6px 0;cursor:pointer}
+.nav-links{display:flex;gap:10px}
+.nav-links a{font-size:0.9rem;color:var(--muted);text-decoration:none;padding:6px 8px;border-radius:6px}
+.nav-links a:hover{background:#fff;border:1px solid #eee}
 
-        /* Grid */
-        .video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-bottom:40px}
-        .video-card{background:var(--card);border-radius:10px;overflow:hidden;box-shadow:0 6px 18px rgba(8,8,8,0.04);transition:transform .18s}
-        .video-card:hover{transform:translateY(-6px)}
-        .video-thumb{position:relative;height:0;padding-bottom:56.25%;overflow:hidden;background:#111}
-        .video-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-        .video-duration{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.65);color:#fff;padding:4px 8px;border-radius:6px;font-size:12px}
-        .video-info{padding:12px}
-        .video-info h3{font-size:0.98rem;margin-bottom:8px;height:42px;overflow:hidden}
-        .video-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:0.85rem;margin-bottom:10px}
-        .video-actions{display:flex;gap:8px}
-        .video-actions a{flex:1;text-align:center;padding:9px;border-radius:8px;text-decoration:none;font-weight:600}
-        .watch-btn{background:var(--primary);color:#fff}
-        .buy-btn{background:var(--secondary);color:#fff}
+/* Filters */
+.filters{display:flex;gap:8px;margin:14px 0;flex-wrap:wrap}
+.filter-btn{background:var(--card);border:1px solid #eee;padding:8px 14px;border-radius:20px;cursor:pointer;font-weight:600;color:var(--muted)}
+.filter-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
 
-        /* Empty state */
-        .empty{padding:40px;text-align:center;color:var(--muted)}
+/* Grid */
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-bottom:40px}
+.video-card{background:var(--card);border-radius:10px;overflow:hidden;box-shadow:0 6px 18px rgba(8,8,8,0.04);transition:transform .18s}
+.video-card:hover{transform:translateY(-6px)}
+.video-thumb{position:relative;height:0;padding-bottom:56.25%;overflow:hidden;background:#111}
+.video-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.video-duration{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.65);color:#fff;padding:4px 8px;border-radius:6px;font-size:12px}
+.video-info{padding:12px}
+.video-info h3{font-size:0.98rem;margin-bottom:8px;height:42px;overflow:hidden}
+.video-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:0.85rem;margin-bottom:10px}
+.video-actions{display:flex;gap:8px}
+.video-actions a{flex:1;text-align:center;padding:9px;border-radius:8px;font-weight:600;text-decoration:none}
+.watch-btn{background:var(--primary);color:#fff}
+.buy-btn{background:var(--secondary);color:#fff}
 
-        /* Modal overlay (centered, not full-screen content) */
-        .modal {
-            position: fixed;
-            inset: 0;
-            display: none; /* toggled by JS */
-            align-items: center;
-            justify-content: center;
-            background: rgba(0,0,0,0.6);
-            z-index: 1200;
-            padding: 20px;
-        }
+/* Empty */
+.empty{padding:40px;text-align:center;color:var(--muted)}
 
-        .modal.open { display: flex; }
+/* Modal overlay */
+.modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.6);
+    z-index: 1200;
+    padding: 20px;
+}
+.modal.open { display: flex; }
 
-        .modal-box {
-            width: 100%;
-            max-width: 980px;
-            background: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-            display:flex;
-            flex-direction:column;
-        }
+.modal-box {
+    width: 100%;
+    max-width: 980px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    display:flex;
+    flex-direction:column;
+}
 
-        /* Overlay close button (small, floating) */
-        .modal-close {
-            position:absolute;
-            right: 28px;
-            top: 28px;
-            width:40px;height:40px;border-radius:999px;
-            display:flex;align-items:center;justify-content:center;
-            background: rgba(0,0,0,0.45); color:white; border:none;
-            cursor:pointer; z-index:1300; font-size:18px;
-            transition: transform .12s;
-        }
-        .modal-close:hover{transform:scale(1.05)}
+/* Close button overlay */
+.modal-close {
+    position:absolute;
+    right: 28px;
+    top: 28px;
+    width:40px;
+    height:40px;
+    border-radius:999px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: rgba(0,0,0,0.45);
+    color:white;
+    border:none;
+    cursor:pointer;
+    font-size:18px;
+}
 
-        /* Video area responsive 16:9 */
-        .modal-video-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#000}
-        .modal-video-wrap iframe,
-        .modal-video-wrap video{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;object-fit:contain}
+/* Video 16:9 */
+.modal-video-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#000}
+.modal-video-wrap iframe,
+.modal-video-wrap video{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:contain}
 
-        /* Details area under video */
-        .modal-details{padding:14px 16px;display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;border-top:1px solid #f1f1f1}
-        .modal-details .desc{flex:1;min-width:220px}
-        .modal-details h3{font-size:1rem;margin-bottom:6px}
-        .modal-details p{color:var(--muted);font-size:0.92rem;margin-bottom:10px}
-        .modal-actions{display:flex;gap:8px}
-        .product-link{background:var(--primary);color:#fff;padding:9px 14px;border-radius:8px;text-decoration:none;font-weight:700}
+/* Details */
+.modal-details{padding:14px 16px;display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;border-top:1px solid #f1f1f1}
+.modal-details .desc{flex:1;min-width:220px}
+.modal-details h3{font-size:1rem;margin-bottom:6px}
+.modal-details p{color:var(--muted);font-size:0.92rem;margin-bottom:10px}
+.modal-actions{display:flex;gap:8px}
+.product-link{background:var(--primary);color:#fff;padding:9px 14px;border-radius:8px;text-decoration:none;font-weight:700}
 
-        /* Gallery small */
-        .image-gallery{display:flex;gap:8px;overflow:auto;padding:6px 0}
-        .image-gallery img{height:72px;border-radius:6px;object-fit:cover;cursor:pointer}
+/* Gallery small */
+.image-gallery{display:flex;gap:8px;overflow:auto;padding:6px 0}
+.image-gallery img{height:55px;border-radius:6px;cursor:pointer;object-fit:cover}
 
-        /* Responsive tweaks */
-        @media (max-width:720px){
-            .container{width:96%}
-            .video-info h3{height:48px}
-            .modal-box{max-width:94%}
-            .modal-close{right:16px;top:16px}
-            .image-gallery img{height:60px}
-        }
-    </style>
+/* IMAGE VIEWER POPUP */
+.img-viewer {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+.img-viewer.open { display: flex; }
+.img-viewer img {
+    max-width: 88%;
+    max-height: 88%;
+    border-radius: 10px;
+    object-fit: contain;
+}
+
+/* Next Prev */
+.img-viewer-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 32px;
+    color: #fff;
+    background: rgba(0,0,0,0.5);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    cursor: pointer;
+}
+.img-prev { left: 20px; }
+.img-next { right: 20px; }
+
+/* Close */
+.img-viewer-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 32px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+@media (max-width:720px){
+    .modal-box{max-width:94%}
+    .modal-close{right:16px;top:16px}
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div style="display:flex;align-items:center;gap:8px;">
-                <div class="logo"><i class="fas fa-play-circle"></i><h1>ShopeeVideo</h1></div>
-                <div class="search-bar" style="margin-left:12px;">
-                    <input id="searchInput" type="text" placeholder="Cari video..." aria-label="Cari video">
-                    <button aria-label="Cari"><i class="fas fa-search"></i></button>
-                </div>
-            </div>
-            <nav class="nav-links">
-                <a href="javascript:;">Beranda</a>
-                <a href="javascript:;">Kategori</a>
-            </nav>
-        </header>
 
-        <div class="filters" id="filters">
-            <button class="filter-btn active">Semua</button>
-            <button class="filter-btn">Elektronik</button>
-            <button class="filter-btn">Fashion</button>
-            <button class="filter-btn">Kecantikan</button>
-            <button class="filter-btn">Rumah Tangga</button>
-            <button class="filter-btn">Hobi</button>
-        </div>
-
-        <main>
-            <div id="videoContainer" class="video-grid">
-                <!-- cards injected by JS -->
-            </div>
-            <div id="emptyState" class="empty" style="display:none">Tidak ada produk ditemukan</div>
-        </main>
-    </div>
-
-    <!-- Modal (centered) -->
-    <div id="videoModal" class="modal" role="dialog" aria-hidden="true" aria-label="Video player modal">
-        <div class="modal-box" id="modalBox">
-            <!-- close is overlayed (outside modal-box in DOM order to float on top nicely) -->
-            <div class="modal-video-wrap" id="modalVideo">
-                <!-- iframe / video inserted here -->
-            </div>
-
-            <div class="modal-details">
-                <div class="desc">
-                    <h3 id="modalTitle">Judul Video</h3>
-                    <p id="modalDescription">Deskripsi singkat akan muncul di sini.</p>
-
-                    <div class="image-gallery" id="imageGallery">
-                        <!-- generated images -->
-                    </div>
-                </div>
-
-                <div style="min-width:180px;">
-                    <div style="display:flex;flex-direction:column;gap:8px;">
-                        <a id="modalProductLink" class="product-link" href="#" target="_blank" rel="noopener noreferrer">
-                            <i class="fas fa-shopping-cart"></i>&nbsp;Lihat Produk
-                        </a>
-                        <div style="margin-top:6px;color:var(--muted);font-size:0.9rem">
-                            <div id="modalMeta"></div>
-                        </div>
-                    </div>
-                </div>
+<div class="container">
+    <header>
+        <div style="display:flex;align-items:center;gap:8px;">
+            <div class="logo"><i class="fas fa-play-circle"></i><h1>ShopeeVideo</h1></div>
+            <div class="search-bar">
+                <input id="searchInput" type="text" placeholder="Cari video...">
+                <button><i class="fas fa-search"></i></button>
             </div>
         </div>
+        <nav class="nav-links">
+            <a href="#">Beranda</a>
+            <a href="#">Kategori</a>
+        </nav>
+    </header>
 
-        <button class="modal-close" id="closeModal" aria-label="Tutup">&times;</button>
+    <div class="filters">
+        <button class="filter-btn active">Semua</button>
+        <button class="filter-btn">Elektronik</button>
+        <button class="filter-btn">Fashion</button>
+        <button class="filter-btn">Kecantikan</button>
+        <button class="filter-btn">Rumah Tangga</button>
+        <button class="filter-btn">Hobi</button>
     </div>
 
-    <!-- Minimal script area -->
-    <script>
-        // === BLOGGER API (tetap dipakai) ===
-        const BLOG_ID = '5725416963670414367';
-        const API_KEY = 'AIzaSyA8k0Fr9m-7zsC1EzdOjI3kgMR92bJHs_E';
+    <div id="videoContainer" class="video-grid"></div>
+    <div id="emptyState" class="empty" style="display:none">Tidak ada produk ditemukan</div>
+</div>
 
-        // Safe helpers that accept different shapes
-        function parseHTML(content) {
-            if (!content) return (new DOMParser()).parseFromString('', 'text/html');
-            if (typeof content === 'string') return (new DOMParser()).parseFromString(content, 'text/html');
-            // if object from blogger API, find content property
-            if (content.content) return (new DOMParser()).parseFromString(content.content, 'text/html');
-            return (new DOMParser()).parseFromString('', 'text/html');
+<!-- MODAL VIDEO -->
+<div id="videoModal" class="modal">
+    <div class="modal-box" id="modalBox">
+        <div class="modal-video-wrap" id="modalVideo"></div>
+
+        <div class="modal-details">
+            <div class="desc">
+                <h3 id="modalTitle"></h3>
+                <p id="modalDescription"></p>
+                <div class="image-gallery" id="imageGallery"></div>
+            </div>
+
+            <div>
+                <a id="modalProductLink" class="product-link" target="_blank">Lihat Produk</a>
+                <div id="modalMeta" style="margin-top:8px;color:#777;font-size:0.9rem"></div>
+            </div>
+        </div>
+    </div>
+
+    <button class="modal-close" id="closeModal">&times;</button>
+</div>
+
+<!-- IMAGE VIEWER -->
+<div class="img-viewer" id="imgViewer">
+    <button class="img-viewer-btn img-prev" id="imgPrev">&#10094;</button>
+    <img id="imgViewerImg" src="">
+    <button class="img-viewer-btn img-next" id="imgNext">&#10095;</button>
+    <button class="img-viewer-close" id="imgViewerClose">&times;</button>
+</div>
+
+
+<script>
+/* ============================== */
+/* BLOGGER API CONFIG             */
+/* ============================== */
+const BLOG_ID = '5725416963670414367';
+const API_KEY = 'AIzaSyA8k0Fr9m-7zsC1EzdOjI3kgMR92bJHs_E';
+
+function parseHTML(post){
+    try {
+        const c = post.content || post;
+        return new DOMParser().parseFromString(c, 'text/html');
+    } catch(e){ return new DOMParser().parseFromString('', 'text/html'); }
+}
+
+function extractThumbnail(post){
+    try{
+        const doc = parseHTML(post);
+        const c = doc.querySelector('.thumbnail')?.textContent?.trim();
+        if(c) return c;
+        const img = doc.querySelector('img');
+        if(img) return img.src;
+    }catch(e){}
+    return "https://images.unsplash.com/photo-1611224923853-80b023f02d71?auto=format&fit=crop&w=500&q=80";
+}
+
+function extractVideoUrl(post){
+    const doc = parseHTML(post);
+    const v = doc.querySelector('.video_url')?.textContent?.trim();
+    if(v) return v;
+    const iframe = doc.querySelector('iframe');
+    if(iframe) return iframe.src;
+    const a = doc.querySelector('a[href*=".mp4"], a[href*="youtu"]');
+    if(a) return a.href;
+    return '';
+}
+
+function extractProductLink(post){
+    const doc = parseHTML(post);
+    const link = doc.querySelector('.product_link')?.textContent?.trim();
+    if(link) return link;
+    const a = doc.querySelector('a[href*="shopee"]');
+    if(a) return a.href;
+    return '#';
+}
+
+function extractCategory(post){
+    return post.labels?.[0] || "Uncategorized";
+}
+
+function extractDuration(post){
+    const doc = parseHTML(post);
+    return doc.querySelector('.duration')?.textContent?.trim() || "10:00";
+}
+
+function extractDescription(post){
+    const doc = parseHTML(post);
+    const d = doc.querySelector('.video-description')?.textContent;
+    if(d) return d.length>160? d.substring(0,160)+'...' : d;
+    return post.title;
+}
+
+function extractGallery(post){
+    const doc = parseHTML(post);
+    const g = doc.querySelector('.gallery');
+    if(g?.textContent){
+        return g.textContent.split(',').map(s=>s.trim()).filter(Boolean);
+    }
+    return Array.from(doc.querySelectorAll("img")).map(i=>i.src);
+}
+
+function formatDate(date){
+    const d = new Date(date);
+    const now = new Date();
+    const diff = Math.floor((now - d)/(1000*60*60*24));
+    if(diff <= 0) return "hari ini";
+    if(diff === 1) return "1 hari lalu";
+    if(diff < 7) return diff+" hari lalu";
+    if(diff < 30) return Math.floor(diff/7)+" minggu lalu";
+    return Math.floor(diff/30)+" bulan lalu";
+}
+
+/* ============================== */
+/* DISPLAY GRID                   */
+/* ============================== */
+function displayVideos(list){
+    const container = document.getElementById('videoContainer');
+    const empty = document.getElementById('emptyState');
+    container.innerHTML = "";
+
+    if(!list.length){
+        empty.style.display = 'block';
+        return;
+    }
+    empty.style.display = 'none';
+
+    list.forEach(v=>{
+        const el = document.createElement('div');
+        el.className = "video-card";
+        el.innerHTML = `
+            <div class="video-thumb">
+                <img src="${v.thumbnail}">
+                <div class="video-duration">${v.duration}</div>
+            </div>
+            <div class="video-info">
+                <h3>${v.title}</h3>
+                <div class="video-meta">
+                    <span>${v.views}</span>
+                    <span>${v.date}</span>
+                </div>
+                <div class="video-actions">
+                    <a href="#" class="watch-btn" data-id="${v.id}">Tonton</a>
+                    <a href="${v.productLink}" target="_blank" class="buy-btn">Beli</a>
+                </div>
+            </div>
+        `;
+        el.querySelector(".watch-btn").onclick = (e)=>{
+            e.preventDefault();
+            openVideoModal(v.id);
+        };
+        container.appendChild(el);
+    });
+}
+
+/* ============================== */
+/* LOAD VIDEOS                    */
+/* ============================== */
+let currentVideos = [];
+
+async function loadVideosFromBlogger(){
+    try{
+        const url = `https://www.googleapis.com/blogger/v3/blogs/${BLOG_ID}/posts?key=${API_KEY}&maxResults=20`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if(data.items){
+            currentVideos = data.items.map(p=>({
+                id: p.id,
+                title: p.title,
+                thumbnail: extractThumbnail(p),
+                videoUrl: extractVideoUrl(p),
+                productLink: extractProductLink(p),
+                category: extractCategory(p),
+                duration: extractDuration(p),
+                views: "0 views",
+                date: formatDate(p.published),
+                description: extractDescription(p),
+                raw: p
+            }));
+            displayVideos(currentVideos);
         }
+    }catch(e){
+        console.log("Blogger error",e);
+    }
+}
 
-        function extractThumbnail(post){
-            try{
-                const doc = parseHTML(post);
-                const thumb = doc.querySelector('.thumbnail')?.textContent?.trim();
-                if (thumb) return thumb;
-                const img = doc.querySelector('img');
-                if (img) return img.src;
-            }catch(e){}
-            return 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
-        }
+/* ============================== */
+/* MODAL PLAYER                   */
+/* ============================== */
+function openVideoModal(id){
+    const v = currentVideos.find(x=>x.id == id);
+    if(!v) return;
 
-        function extractVideoUrl(post){
-            try{
-                const doc = parseHTML(post);
-                const v = doc.querySelector('.video_url')?.textContent?.trim();
-                if (v) return v;
-                // try to find iframes
-                const iframe = doc.querySelector('iframe');
-                if (iframe && iframe.src) return iframe.src;
-                // try links to mp4 or youtu.be
-                const a = doc.querySelector('a[href*=".mp4"], a[href*="youtu"]');
-                if (a) return a.href;
-            }catch(e){}
-            return '';
-        }
+    document.getElementById("modalTitle").textContent = v.title;
+    document.getElementById("modalDescription").textContent = v.description;
+    document.getElementById("modalProductLink").href = v.productLink;
+    document.getElementById("modalMeta").textContent = v.views+" • "+v.date;
 
-        function extractProductLink(post){
-            try{
-                const doc = parseHTML(post);
-                const link = doc.querySelector('.product_link')?.textContent?.trim();
-                if (link) return link;
-                const a = doc.querySelector('a[href*="shopee"], a[href*="http"]');
-                if (a) return a.href;
-            }catch(e){}
-            return '#';
-        }
+    const gallery = extractGallery(v.raw);
+    let galleryHTML = "";
+    gallery.forEach((src,i)=>{
+        galleryHTML += `<img src="${src}" data-index="${i}">`;
+    });
+    document.getElementById("imageGallery").innerHTML = galleryHTML;
 
-        function extractCategory(post){
-            try{
-                return post.labels && post.labels.length ? post.labels[0] : 'Uncategorized';
-            }catch(e){return 'Uncategorized'}
-        }
+    // CLICK → IMAGE VIEWER
+    document.querySelectorAll("#imageGallery img").forEach(img=>{
+        img.onclick = ()=>{
+            currentGallery = gallery;
+            openImageViewer(parseInt(img.dataset.index));
+        };
+    });
 
-        function extractDuration(post){
-            try{
-                const doc = parseHTML(post);
-                return doc.querySelector('.duration')?.textContent?.trim() || '10:00';
-            }catch(e){return '10:00'}
-        }
+    // VIDEO PLAYER
+    const wrap = document.getElementById("modalVideo");
+    wrap.innerHTML = "";
+    let src = v.videoUrl;
 
-        function extractDescription(post){
-            try{
-                const doc = parseHTML(post);
-                const d = doc.querySelector('.video-description')?.textContent;
-                if (d) return (d.length>180? d.substring(0,180)+'...' : d);
-            }catch(e){}
-            return post.title || 'No description available';
-        }
+    // Convert youtu.be
+    if(src.includes("youtu.be")){
+        const id = src.split("youtu.be/")[1];
+        src = "https://www.youtube.com/embed/"+id;
+    }
+    if(src.includes("watch?v=")){
+        const id = src.split("watch?v=")[1];
+        src = "https://www.youtube.com/embed/"+id;
+    }
 
-        function extractGallery(post){
-            try{
-                const doc = parseHTML(post);
-                const galleryElem = doc.querySelector('.gallery');
-                if (galleryElem && galleryElem.textContent) {
-                    return galleryElem.textContent.split(',').map(u=>u.trim()).filter(Boolean);
-                }
-                // fallback: all img tags
-                const imgs = Array.from(doc.querySelectorAll('img')).map(i=>i.src).filter(Boolean);
-                return imgs;
-            }catch(e){}
-            return [];
-        }
+    if(src.includes("youtube")){
+        wrap.innerHTML = `<iframe src="${src}?autoplay=1&rel=0"></iframe>`;
+    }else if(src.endsWith(".mp4")){
+        wrap.innerHTML = `<video controls autoplay src="${src}"></video>`;
+    }
 
-        function formatDate(dateString){
-            if(!dateString) return '';
-            const date = new Date(dateString);
-            const now = new Date();
-            const diffMs = now - date;
-            const diffDays = Math.floor(diffMs / (1000*60*60*24));
-            if(diffDays <= 0) return 'hari ini';
-            if(diffDays === 1) return '1 hari lalu';
-            if(diffDays < 7) return diffDays + ' hari lalu';
-            if(diffDays < 30) return Math.floor(diffDays/7) + ' minggu lalu';
-            return Math.floor(diffDays/30) + ' bulan lalu';
-        }
+    document.getElementById("videoModal").classList.add("open");
+}
 
-        // Fallback sample
-        const videoData = [
-            {
-                id: 1,
-                title: "Review iPhone 15 Pro Max - Worth It Gak Sih?",
-                thumbnail: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                duration: "12:45",
-                category: "Elektronik",
-                views: "245K",
-                date: "2 hari lalu",
-                productLink: "https://shope.ee/iphone15promax",
-                description: "Review lengkap iPhone 15 Pro Max setelah pemakaian 1 minggu. Dari performa, kamera, hingga battery life.",
-                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-            }
-        ];
+document.getElementById("closeModal").onclick = ()=>{
+    document.getElementById("videoModal").classList.remove("open");
+    document.getElementById("modalVideo").innerHTML = "";
+};
 
-        // Display functions
-        function displayVideos(videos){
-            const container = document.getElementById('videoContainer');
-            const empty = document.getElementById('emptyState');
-            container.innerHTML = '';
-            if(!videos || videos.length === 0){
-                empty.style.display = 'block';
-                return;
-            } else empty.style.display = 'none';
+document.getElementById("videoModal").onclick = (e)=>{
+    const box = document.getElementById("modalBox");
+    if(!box.contains(e.target) && e.target.id !== "closeModal"){
+        document.getElementById("closeModal").click();
+    }
+};
 
-            videos.forEach(v => {
-                const card = document.createElement('article');
-                card.className = 'video-card';
-                card.innerHTML = `
-                    <div class="video-thumb">
-                        <img src="${v.thumbnail}" alt="${escapeHtml(v.title)}" onerror="this.src='https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
-                        <div class="video-duration">${v.duration || '00:00'}</div>
-                    </div>
-                    <div class="video-info">
-                        <h3>${escapeHtml(v.title)}</h3>
-                        <div class="video-meta">
-                            <span>${v.views || '0 views'}</span>
-                            <span>${v.date || ''}</span>
-                        </div>
-                        <div class="video-actions">
-                            <a href="#" class="watch-btn" data-id="${v.id}" title="Tonton"><i class="fas fa-play"></i> Tonton</a>
-                            <a href="${v.productLink||'#'}" class="buy-btn" target="_blank" rel="noopener noreferrer"><i class="fas fa-shopping-cart"></i> Beli</a>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
+/* ============================== */
+/* IMAGE VIEWER NEXT PREV         */
+/* ============================== */
+let currentGallery = [];
+let currentIndex = 0;
 
-            // attach listeners
-            container.querySelectorAll('.watch-btn').forEach(btn=>{
-                btn.addEventListener('click', function(e){
-                    e.preventDefault();
-                    const id = this.getAttribute('data-id');
-                    openVideoModal(id);
-                });
-            });
-        }
+function openImageViewer(index){
+    currentIndex = index;
+    document.getElementById("imgViewerImg").src = currentGallery[currentIndex];
+    document.getElementById("imgViewer").classList.add("open");
+}
 
-        // Escape helper
-        function escapeHtml(text){
-            if(!text) return '';
-            return String(text).replace(/[&<>"']/g, function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]});
-        }
+function closeImageViewer(){
+    document.getElementById("imgViewer").classList.remove("open");
+}
 
-        // Global current videos
-        window.currentVideos = [];
+document.getElementById("imgPrev").onclick = ()=>{
+    currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+    document.getElementById("imgViewerImg").src = currentGallery[currentIndex];
+};
 
-        // Load from Blogger API
-        async function loadVideosFromBlogger(){
-            const BLOG_URL = `https://www.googleapis.com/blogger/v3/blogs/${BLOG_ID}/posts?key=${API_KEY}&maxResults=25`;
-            try {
-                const res = await fetch(BLOG_URL);
-                const data = await res.json();
-                if (data && data.items && data.items.length){
-                    const vids = data.items.map(post=>{
-                        return {
-                            id: post.id,
-                            title: post.title,
-                            thumbnail: extractThumbnail(post),
-                            videoUrl: extractVideoUrl(post),
-                            productLink: extractProductLink(post),
-                            category: extractCategory(post),
-                            duration: extractDuration(post),
-                            views: "0",
-                            date: formatDate(post.published),
-                            description: extractDescription(post),
-                            rawPost: post
-                        };
-                    });
-                    window.currentVideos = vids;
-                    displayVideos(vids);
-                    return;
-                }
-            } catch (e){
-                console.warn('Blogger load error:', e);
-            }
-            // fallback if Blogger failed
-            window.currentVideos = videoData;
-            displayVideos(videoData);
-        }
+document.getElementById("imgNext").onclick = ()=>{
+    currentIndex = (currentIndex + 1) % currentGallery.length;
+    document.getElementById("imgViewerImg").src = currentGallery[currentIndex];
+};
 
-        // Open modal with video id (matches either numeric sample id or blogger post id)
-        function openVideoModal(videoId){
-            const videos = window.currentVideos || [];
-            const v = videos.find(x => String(x.id) === String(videoId)) || videos[0];
-            if(!v) return;
+document.getElementById("imgViewerClose").onclick = closeImageViewer;
 
-            // Title & desc & product link
-            document.getElementById('modalTitle').textContent = v.title || 'Video';
-            document.getElementById('modalDescription').textContent = v.description || '';
-            document.getElementById('modalProductLink').href = v.productLink || '#';
-            document.getElementById('modalMeta').textContent = `${v.views || '0 views'} · ${v.date || ''}`;
+document.getElementById("imgViewer").onclick = (e)=>{
+    if(e.target.id === "imgViewer") closeImageViewer();
+};
 
-            // Gallery
-            const gallery = extractGallery(v.rawPost || v);
-            const galleryNode = document.getElementById('imageGallery');
-            if (gallery && gallery.length){
-                galleryNode.innerHTML = gallery.map(src => `<img src="${src}" alt="foto" onerror="this.style.display='none'">`).join('');
-                // click to replace main video area with image preview (optional)
-                galleryNode.querySelectorAll('img').forEach(img=>{
-                    img.addEventListener('click', () => {
-                        const wrap = document.getElementById('modalVideo');
-                        wrap.innerHTML = `<img src="${img.src}" style="width:100%;height:100%;object-fit:contain">`;
-                    });
-                });
-            } else {
-                galleryNode.innerHTML = '';
-            }
+/* ============================== */
+/* FILTERS & SEARCH               */
+/* ============================== */
+document.querySelectorAll(".filter-btn").forEach(btn=>{
+    btn.onclick = ()=>{
+        document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
 
-            // Setup video area
-            const player = document.getElementById('modalVideo');
-            player.innerHTML = ''; // clear
-            // Normalize YouTube links
-            let src = v.videoUrl || '';
-            if(src.includes('youtu.be/')){
-                const id = src.split('youtu.be/')[1].split(/[?&]/)[0];
-                src = 'https://www.youtube.com/embed/' + id;
-            }
-            // If full youtube watch URL
-            if(src.includes('watch?v=')){
-                const id = src.split('watch?v=')[1].split(/[?&]/)[0];
-                src = 'https://www.youtube.com/embed/' + id;
-            }
+        const f = btn.textContent;
+        if(f==="Semua") return displayVideos(currentVideos);
+        displayVideos(currentVideos.filter(v=>v.category===f));
+    };
+});
 
-            if(src && (src.includes('youtube.com') || src.includes('youtu.be'))){
-                // add autoplay param on open
-                const autoplaySrc = src + (src.includes('?') ? '&autoplay=1' : '?autoplay=1') + '&rel=0';
-                player.innerHTML = `<iframe src="${autoplaySrc}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-            } else if (src && (src.endsWith('.mp4') || src.includes('.mp4'))){
-                player.innerHTML = `<video controls src="${src}"></video>`;
-            } else {
-                // fallback: placeholder image
-                player.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;background:#000"><i class="fas fa-play-circle" style="font-size:36px"></i><div style="margin-left:12px">Video tidak tersedia</div></div>`;
-            }
+document.getElementById("searchInput").oninput = function(){
+    const q = this.value.toLowerCase();
+    const list = currentVideos.filter(v=>(
+        v.title.toLowerCase().includes(q) ||
+        v.description.toLowerCase().includes(q)
+    ));
+    displayVideos(list);
+};
 
-            // show modal
-            const modal = document.getElementById('videoModal');
-            modal.classList.add('open');
-            modal.setAttribute('aria-hidden','false');
-
-            // focus close button for accessibility
-            setTimeout(()=>document.getElementById('closeModal').focus(),150);
-        }
-
-        // Close modal helper
-        function closeModal(){
-            const modal = document.getElementById('videoModal');
-            modal.classList.remove('open');
-            modal.setAttribute('aria-hidden','true');
-            // stop playback - remove iframe/video
-            document.getElementById('modalVideo').innerHTML = '';
-        }
-
-        // Event listeners
-        document.getElementById('closeModal').addEventListener('click', closeModal);
-        // clicking overlay outside modal-box closes
-        document.getElementById('videoModal').addEventListener('click', function(e){
-            const box = document.getElementById('modalBox');
-            if (!box.contains(e.target) && e.target !== document.getElementById('closeModal')) {
-                closeModal();
-            }
-        });
-        // ESC key
-        document.addEventListener('keydown', function(e){
-            if(e.key === 'Escape') closeModal();
-        });
-
-        // Filters interactivity
-        document.querySelectorAll('.filter-btn').forEach(btn=>{
-            btn.addEventListener('click', function(){
-                document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-                this.classList.add('active');
-                const f = this.textContent.trim();
-                let list = window.currentVideos || [];
-                if(f !== 'Semua'){
-                    list = list.filter(v => (v.category || '').toLowerCase() === f.toLowerCase());
-                }
-                displayVideos(list);
-            });
-        });
-
-        // Search
-        document.getElementById('searchInput').addEventListener('input', function(){
-            const q = this.value.trim().toLowerCase();
-            const list = (window.currentVideos || []).filter(v=>{
-                return (v.title||'').toLowerCase().includes(q) || (v.description||'').toLowerCase().includes(q);
-            });
-            displayVideos(list);
-        });
-
-        // Init
-        loadVideosFromBlogger();
-    </script>
+/* START */
+loadVideosFromBlogger();
+</script>
 </body>
 </html>
