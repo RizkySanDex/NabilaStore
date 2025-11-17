@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shopee Video – FIX POSTER SAMPING 100%</title>
+<title>Shopee Video – FIX POSTER SAMPING 100% (Stable)</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
@@ -289,6 +289,16 @@ function extractGallery(p){
     return raw.split(",").map(x=>x.trim()).filter(x=>x.length>5);
 }
 
+// NEW: extractPrice function
+function extractPrice(p){
+    try{
+        const doc = parseHTML(p);
+        return doc.querySelector('.product_price')?.textContent?.trim() || "-";
+    }catch(e){
+        return "-";
+    }
+}
+
 async function loadVideos(){
     const url = `https://www.googleapis.com/blogger/v3/blogs/${BLOG_ID}/posts?key=${API_KEY}&maxResults=30`;
     const res = await fetch(url);
@@ -301,10 +311,14 @@ async function loadVideos(){
         videoUrl:extractVideoUrl(p),
         productLink:extractProductLink(p),
         description:extractDescription(p),
-        gallery:extractGallery(p)
+        gallery:extractGallery(p),
+        price: extractPrice(p),
+        labels: p.labels || []
     }));
 
     renderList(currentVideos);
+
+    initFilters();
 }
 
 function renderList(list){
@@ -319,7 +333,7 @@ function renderList(list){
             </div>
             <div class="video-info">
                 <h3>${v.title}</h3>
-                <div class="video-meta"><span>Harga</span></div>
+                <div class="video-meta"><span>${v.price || 'Harga'}</span></div>
                 <div class="video-actions">
                     <a href="#" class="watch-btn" data-id="${v.id}">Tonton</a>
                     <a class="buy-btn" href="${v.productLink}" target="_blank">Beli</a>
@@ -336,6 +350,7 @@ function renderList(list){
 
 function openModal(id){
     const v = currentVideos.find(x=>x.id===id);
+    if(!v) return;
 
     document.getElementById("modalTitle").textContent = v.title;
     document.getElementById("modalDescription").textContent = v.description;
@@ -370,13 +385,15 @@ function openImageViewer(i,gallery){
 }
 
 document.getElementById("imgPrev").onclick = ()=>{
+    if(!currentGallery.length) return;
     currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
-    imgViewerImg.src = currentGallery[currentIndex];
+    document.getElementById("imgViewerImg").src = currentGallery[currentIndex];
 };
 
 document.getElementById("imgNext").onclick = ()=>{
+    if(!currentGallery.length) return;
     currentIndex = (currentIndex + 1) % currentGallery.length;
-    imgViewerImg.src = currentGallery[currentIndex];
+    document.getElementById("imgViewerImg").src = currentGallery[currentIndex];
 };
 
 document.getElementById("imgViewerClose").onclick = ()=>{
@@ -384,6 +401,26 @@ document.getElementById("imgViewerClose").onclick = ()=>{
 };
 
 loadVideos();
+function initFilters(){
+    document.querySelectorAll('.filter-btn').forEach(btn=>{
+        btn.onclick = ()=>{
+            document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const label = btn.textContent.trim().toLowerCase();
+
+            if(label === "semua"){
+                renderList(currentVideos);
+            } else {
+                const filtered = currentVideos.filter(v =>
+                    (v.labels || []).map(x=>x.toLowerCase()).includes(label)
+                );
+                renderList(filtered);
+            }
+        };
+    });
+}
+
 </script>
 </body>
 </html>
