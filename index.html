@@ -15,12 +15,12 @@ body{
 }
 
 .container{width:94%;max-width:1150px;margin:20px auto}
-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:10px}
 .logo{display:flex;align-items:center;gap:8px}
 .logo i{font-size:1.6rem;color:#ff5314}
 .logo h1{font-size:1.1rem;font-weight:700}
 
-.search-bar{flex:1;display:flex;max-width:520px;margin-left:12px}
+.search-bar{flex:1;display:flex;max-width:520px;margin-left:12px;min-width:200px}
 .search-bar input{
     flex:1;padding:9px 12px;border:1px solid #ddd;border-radius:6px 0 0 6px
 }
@@ -30,10 +30,30 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 
 .nav-links a{margin-left:12px;color:#777;text-decoration:none;font-size:.9rem}
 
-.filters{display:flex;gap:8px;margin:14px 0}
+.filters-container {
+    position: relative;
+    margin: 14px 0;
+    overflow: hidden;
+}
+
+.filters-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.filters-scroll::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
 .filter-btn{
     padding:8px 14px;border:1px solid #eee;border-radius:20px;background:#fff;
-    cursor:pointer;color:#666;font-weight:600;font-size:0.87rem
+    cursor:pointer;color:#666;font-weight:600;font-size:0.87rem;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 .filter-btn.active{background:#ff5314;color:#fff;border-color:#ff5314}
 
@@ -42,6 +62,7 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
     grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
     gap:18px;
 }
+
 .video-card{
     background:white;
     border-radius:12px;
@@ -98,16 +119,18 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 
 .modal{
     position:fixed;inset:0;
-    background:rgba(0,0,0,.65);
+    background:rgba(0,0,0,.85);
     display:none;align-items:center;justify-content:center;
-    padding:20px;z-index:1500;
+    padding:10px;z-index:1500;
 }
 .modal.open{display:flex}
 
 .modal-box{
-    background:white;width:100%;max-width:1180px;
+    background:white;width:100%;max-width:1180px;max-height:95vh;
     border-radius:12px;overflow:hidden;
     position:relative;box-shadow:0 20px 60px rgba(0,0,0,.35);
+    display: flex;
+    flex-direction: column;
 }
 
 .modal-close{
@@ -120,8 +143,10 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 
 .modal-content-row{
     display:flex;
-    gap:6px;        /* FIX SUPER RAPAT */
-    padding:10px;   /* FIX SUPER RAPAT */
+    gap:6px;
+    padding:10px;
+    flex: 1;
+    overflow: auto;
 }
 .modal-left{flex:2}
 .modal-right{flex:1;display:grid;gap:6px}
@@ -190,8 +215,152 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
     font-size:28px;background:rgba(0,0,0,.6);color:white;border:none;cursor:pointer
 }
 
+/* MEDIA QUERIES UNTUK RESPONSIVITAS MOBILE */
 @media(max-width:768px){
     .modal-content-row{flex-direction:column}
+    
+    /* Header mobile */
+    header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    
+    .search-bar {
+        margin-left: 0;
+        max-width: 100%;
+    }
+    
+    .nav-links {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .nav-links a {
+        margin-left: 0;
+    }
+    
+    /* Video grid mobile */
+    .video-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 12px;
+    }
+    
+    /* Modal mobile */
+    .modal {
+        padding: 5px;
+    }
+    
+    .modal-box {
+        max-height: 98vh;
+    }
+    
+    .modal-content-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .modal-left, .modal-right {
+        flex: none;
+    }
+    
+    .image-grid {
+        grid-template-columns: repeat(auto-fill, 70px);
+        grid-auto-rows: 70px;
+        justify-content: center;
+    }
+    
+    .image-grid img {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .modal-details h3 {
+        font-size: 1rem;
+    }
+    
+    .modal-details p {
+        font-size: 0.85rem;
+    }
+    
+    /* Image viewer mobile */
+    .img-viewer-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    
+    .img-prev {
+        left: 10px;
+    }
+    
+    .img-next {
+        right: 10px;
+    }
+    
+    .img-viewer-close {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        top: 10px;
+        right: 10px;
+    }
+}
+
+@media(max-width:480px){
+    .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .video-info h3 {
+        font-size: 0.75rem;
+        height: 36px;
+    }
+    
+    .video-actions {
+        flex-direction: column;
+        gap: 6px;
+    }
+    
+    .watch-btn, .buy-btn {
+        padding: 8px 0;
+        font-size: 0.8rem;
+    }
+    
+    .logo h1 {
+        font-size: 1rem;
+    }
+    
+    .search-bar input {
+        padding: 10px 12px;
+    }
+    
+    .filter-btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+    
+    .modal-details {
+        padding: 8px 12px 12px;
+    }
+}
+
+/* Touch improvements */
+@media (hover: none) {
+    .video-card:hover {
+        transform: none;
+    }
+    
+    .filter-btn:hover {
+        background: #fff;
+        color: #666;
+    }
+    
+    .filter-btn.active:hover {
+        background: #ff5314;
+        color: #fff;
+    }
 }
 </style>
 </head>
@@ -199,7 +368,7 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 <body>
 <div class="container">
     <header>
-        <div style="display:flex;align-items:center;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
             <div class="logo"><i class="fas fa-play-circle"></i><h1>Nabila Store</h1></div>
             <div class="search-bar">
                 <input id="searchInput" type="text" placeholder="Cari video...">
@@ -212,17 +381,19 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
         </nav>
     </header>
 
-    <div class="filters">
-    <button class="filter-btn active">Semua</button>
-    <button class="filter-btn">Pakaian Pria</button>
-	<button class="filter-btn">Pakaian Wanita</button>
-    <button class="filter-btn">Elektronik</button>
-    <button class="filter-btn">Kecantikan</button>
-    <button class="filter-btn">Rumah Tangga</button>
-    <button class="filter-btn">Gaming</button>
-    <button class="filter-btn">Aksesoris HP</button>
-    <button class="filter-btn">Dapur</button>
-</div>
+    <div class="filters-container">
+        <div class="filters-scroll">
+            <button class="filter-btn active">Semua</button>
+            <button class="filter-btn">Pakaian Pria</button>
+            <button class="filter-btn">Pakaian Wanita</button>
+            <button class="filter-btn">Elektronik</button>
+            <button class="filter-btn">Kecantikan</button>
+            <button class="filter-btn">Rumah Tangga</button>
+            <button class="filter-btn">Gaming</button>
+            <button class="filter-btn">Aksesoris HP</button>
+            <button class="filter-btn">Dapur</button>
+        </div>
+    </div>
 
     <div id="videoContainer" class="video-grid"></div>
 </div>
@@ -333,7 +504,7 @@ function renderList(list){
         card.className = "video-card";
         card.innerHTML = `
             <div class="video-thumb">
-                <img src="${v.thumbnail}">
+                <img src="${v.thumbnail}" alt="${v.title}">
                 <div class="video-duration">Video</div>
             </div>
             <div class="video-info">
@@ -367,6 +538,7 @@ function openModal(id){
     v.gallery.forEach((src,i)=>{
         const img = document.createElement("img");
         img.src = src;
+        img.alt = `Gambar produk ${i+1}`;
         img.onclick = ()=>openImageViewer(i,v.gallery);
         grid.appendChild(img);
     });
@@ -426,6 +598,29 @@ function initFilters(){
     });
 }
 
+// Search functionality
+document.querySelector('.search-bar button').addEventListener('click', performSearch);
+document.getElementById('searchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        performSearch();
+    }
+});
+
+function performSearch() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+    
+    if (searchTerm === '') {
+        renderList(currentVideos);
+        return;
+    }
+    
+    const filtered = currentVideos.filter(v => 
+        v.title.toLowerCase().includes(searchTerm) || 
+        v.description.toLowerCase().includes(searchTerm)
+    );
+    
+    renderList(filtered);
+}
 </script>
 </body>
 </html>
