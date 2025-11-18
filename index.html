@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nabila Store</title>
+<title>Aisah-Shopp</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
@@ -19,6 +19,29 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 .logo{display:flex;align-items:center;gap:8px}
 .logo i{font-size:1.6rem;color:#ff5314}
 .logo h1{font-size:1.1rem;font-weight:700}
+
+.header-ads {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin: 0 15px;
+}
+
+.ads-banner-728 {
+    width: 728px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ads-banner-320 {
+    width: 320px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .search-bar{flex:1;display:flex;max-width:520px;margin-left:12px;min-width:200px}
 .search-bar input{
@@ -188,6 +211,21 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
     color:white;border-radius:8px;font-weight:700;text-decoration:none;margin-top:4px
 }
 
+.ads-banner-300 {
+    width: 300px;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px auto;
+}
+
+.ads-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .img-viewer{
     position:fixed;inset:0;background:rgba(0,0,0,.85);
     display:none;align-items:center;justify-content:center;
@@ -224,6 +262,11 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
         flex-direction: column;
         align-items: stretch;
         gap: 15px;
+    }
+    
+    .header-ads {
+        margin: 0;
+        order: 3;
     }
     
     .search-bar {
@@ -344,6 +387,10 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
     .modal-details {
         padding: 8px 12px 12px;
     }
+    
+    .header-ads {
+        display: none;
+    }
 }
 
 /* Touch improvements */
@@ -368,8 +415,23 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 <body>
 <div class="container">
     <header>
-        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-            <div class="logo"><i class="fas fa-play-circle"></i><h1>Nabila Store</h1></div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;flex:1;">
+            <div class="logo"><i class="fas fa-play-circle"></i><h1>Aisah-Shopp</h1></div>
+            <div class="header-ads">
+                <!-- Iklan 728x90 -->
+                <div class="ads-banner-728">
+                    <script type="text/javascript">
+                        atOptions = {
+                            'key' : 'd6ceefbf8733c8a74df235feba83cdf9',
+                            'format' : 'iframe',
+                            'height' : 90,
+                            'width' : 728,
+                            'params' : {}
+                        };
+                    </script>
+                    <script type="text/javascript" src="//www.highperformanceformat.com/d6ceefbf8733c8a74df235feba83cdf9/invoke.js"></script>
+                </div>
+            </div>
             <div class="search-bar">
                 <input id="searchInput" type="text" placeholder="Cari video...">
                 <button><i class="fas fa-search"></i></button>
@@ -408,14 +470,44 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
                 <div class="modal-video-wrap" id="modalVideo"></div>
             </div>
             <div class="modal-right">
-                <div class="image-grid" id="imageGallery"></div>
+                <div class="ads-sidebar">
+                    <div class="image-grid" id="imageGallery"></div>
+                    <!-- Iklan 300x250 -->
+                    <div class="ads-banner-300">
+                        <script type="text/javascript">
+                            atOptions = {
+                                'key' : 'ad84fafb170e5fcdcc5c91b6a8ed321c',
+                                'format' : 'iframe',
+                                'height' : 250,
+                                'width' : 300,
+                                'params' : {}
+                            };
+                        </script>
+                        <script type="text/javascript" src="//www.highperformanceformat.com/ad84fafb170e5fcdcc5c91b6a8ed321c/invoke.js"></script>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="modal-details">
             <h3 id="modalTitle"></h3>
             <p id="modalDescription"></p>
-            <a id="modalProductLink" class="product-link" target="_blank">Lihat Produk</a>
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <a id="modalProductLink" class="product-link" target="_blank">Lihat Produk</a>
+                <!-- Iklan 320x50 -->
+                <div class="ads-banner-320">
+                    <script type="text/javascript">
+                        atOptions = {
+                            'key' : '4f9c346f70ab657b945671f6ef7fe74c',
+                            'format' : 'iframe',
+                            'height' : 50,
+                            'width' : 320,
+                            'params' : {}
+                        };
+                    </script>
+                    <script type="text/javascript" src="//www.highperformanceformat.com/4f9c346f70ab657b945671f6ef7fe74c/invoke.js"></script>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -505,13 +597,13 @@ function renderList(list){
         card.innerHTML = `
             <div class="video-thumb">
                 <img src="${v.thumbnail}" alt="${v.title}">
-                <div class="video-duration">Video</div>
+                <div class="video-duration"></div>
             </div>
             <div class="video-info">
                 <h3>${v.title}</h3>
                 <div class="video-meta"><span>${v.price || 'Harga'}</span></div>
                 <div class="video-actions">
-                    <a href="#" class="watch-btn" data-id="${v.id}">Tonton</a>
+                    <a href="#" class="watch-btn" data-id="${v.id}">Lihat Produk</a>
                     <a class="buy-btn" href="${v.productLink}" target="_blank">Beli</a>
                 </div>
             </div>`;
