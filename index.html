@@ -220,10 +220,26 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
     margin: 10px auto;
 }
 
+.ads-banner-320 {
+    width: 320px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .ads-sidebar {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.video-ads-container {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
 }
 
 .img-viewer{
@@ -468,11 +484,27 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
         <div class="modal-content-row">
             <div class="modal-left">
                 <div class="modal-video-wrap" id="modalVideo"></div>
+                
+                <!-- Iklan 320x50 di bawah video -->
+                <div class="video-ads-container">
+                    <div class="ads-banner-320">
+                        <script type="text/javascript">
+                            atOptions = {
+                                'key' : '4f9c346f70ab657b945671f6ef7fe74c',
+                                'format' : 'iframe',
+                                'height' : 50,
+                                'width' : 320,
+                                'params' : {}
+                            };
+                        </script>
+                        <script type="text/javascript" src="//www.highperformanceformat.com/4f9c346f70ab657b945671f6ef7fe74c/invoke.js"></script>
+                    </div>
+                </div>
             </div>
             <div class="modal-right">
                 <div class="ads-sidebar">
                     <div class="image-grid" id="imageGallery"></div>
-                    <!-- Iklan 300x250 -->
+                    <!-- Iklan 300x250 di bawah foto-foto produk -->
                     <div class="ads-banner-300">
                         <script type="text/javascript">
                             atOptions = {
@@ -492,22 +524,7 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
         <div class="modal-details">
             <h3 id="modalTitle"></h3>
             <p id="modalDescription"></p>
-            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
-                <a id="modalProductLink" class="product-link" target="_blank">Lihat Produk</a>
-                <!-- Iklan 320x50 -->
-                <div class="ads-banner-320">
-                    <script type="text/javascript">
-                        atOptions = {
-                            'key' : '4f9c346f70ab657b945671f6ef7fe74c',
-                            'format' : 'iframe',
-                            'height' : 50,
-                            'width' : 320,
-                            'params' : {}
-                        };
-                    </script>
-                    <script type="text/javascript" src="//www.highperformanceformat.com/4f9c346f70ab657b945671f6ef7fe74c/invoke.js"></script>
-                </div>
-            </div>
+            <a id="modalProductLink" class="product-link" target="_blank">Lihat Produk</a>
         </div>
     </div>
 </div>
