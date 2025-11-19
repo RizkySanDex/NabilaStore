@@ -269,6 +269,52 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
     font-size:28px;background:rgba(0,0,0,.6);color:white;border:none;cursor:pointer
 }
 
+/* PAGINATION STYLES */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+    gap: 8px;
+}
+
+.pagination-btn {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #333;
+    transition: all 0.2s;
+    min-width: 40px;
+    text-align: center;
+}
+
+.pagination-btn:hover {
+    background: #f5f5f5;
+}
+
+.pagination-btn.active {
+    background: #ff5314;
+    color: white;
+    border-color: #ff5314;
+}
+
+.pagination-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination-btn.disabled:hover {
+    background: white;
+}
+
+.pagination-dots {
+    padding: 8px 6px;
+    color: #777;
+}
+
 /* MEDIA QUERIES UNTUK RESPONSIVITAS MOBILE */
 @media(max-width:768px){
     .modal-content-row{flex-direction:column}
@@ -365,6 +411,18 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
         top: 10px;
         right: 10px;
     }
+    
+    /* Pagination mobile */
+    .pagination-container {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    
+    .pagination-btn {
+        padding: 6px 10px;
+        min-width: 36px;
+        font-size: 0.9rem;
+    }
 }
 
 @media(max-width:480px){
@@ -404,8 +462,15 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
         padding: 8px 12px 12px;
     }
     
-    .header-ads {
-        display: none;
+    /* Pagination small mobile */
+    .pagination-container {
+        gap: 4px;
+    }
+    
+    .pagination-btn {
+        padding: 6px 8px;
+        min-width: 32px;
+        font-size: 0.85rem;
     }
 }
 
@@ -434,18 +499,18 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;flex:1;">
             <div class="logo"><i class="fas fa-play-circle"></i><h1>Aisah-Shopp</h1></div>
             <div class="header-ads">
-                <!-- Iklan 728x90 -->
-                <div class="ads-banner-728">
+                <!-- Iklan 320x50 di Header (ganti dari 728x90) -->
+                <div class="ads-banner-320">
                     <script type="text/javascript">
                         atOptions = {
-                            'key' : 'd6ceefbf8733c8a74df235feba83cdf9',
+                            'key' : '4f9c346f70ab657b945671f6ef7fe74c',
                             'format' : 'iframe',
-                            'height' : 90,
-                            'width' : 728,
+                            'height' : 50,
+                            'width' : 320,
                             'params' : {}
                         };
                     </script>
-                    <script type="text/javascript" src="//www.highperformanceformat.com/d6ceefbf8733c8a74df235feba83cdf9/invoke.js"></script>
+                    <script type="text/javascript" src="//www.highperformanceformat.com/4f9c346f70ab657b945671f6ef7fe74c/invoke.js"></script>
                 </div>
             </div>
             <div class="search-bar">
@@ -474,6 +539,9 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
     </div>
 
     <div id="videoContainer" class="video-grid"></div>
+    
+    <!-- PAGINATION -->
+    <div class="pagination-container" id="paginationContainer"></div>
 </div>
 
 <!-- MODAL -->
@@ -542,7 +610,12 @@ const BLOG_ID = "5725416963670414367";
 const API_KEY = "AIzaSyA8k0Fr9m-7zsC1EzdOjI3kgMR92bJHs_E";
 
 const videoContainer = document.getElementById("videoContainer");
+const paginationContainer = document.getElementById("paginationContainer");
+
 let currentVideos = [];
+let currentPage = 1;
+const videosPerPage = 24; // 4 baris x 4 kolom = 24 video per halaman
+
 function parseHTML(post){
     return new DOMParser().parseFromString(post.content || "", "text/html");
 }
@@ -602,13 +675,19 @@ async function loadVideos(){
     }));
 
     renderList(currentVideos);
+    renderPagination(currentVideos.length);
 
     initFilters();
 }
 
 function renderList(list){
+    // Hitung video yang akan ditampilkan di halaman saat ini
+    const startIndex = (currentPage - 1) * videosPerPage;
+    const endIndex = startIndex + videosPerPage;
+    const videosToShow = list.slice(startIndex, endIndex);
+    
     videoContainer.innerHTML = "";
-    list.forEach(v=>{
+    videosToShow.forEach(v=>{
         const card = document.createElement("div");
         card.className = "video-card";
         card.innerHTML = `
@@ -631,6 +710,109 @@ function renderList(list){
         };
         videoContainer.appendChild(card);
     });
+}
+
+function renderPagination(totalVideos) {
+    const totalPages = Math.ceil(totalVideos / videosPerPage);
+    paginationContainer.innerHTML = "";
+    
+    if (totalPages <= 1) return;
+    
+    // Tombol Previous
+    const prevBtn = document.createElement("button");
+    prevBtn.className = `pagination-btn ${currentPage === 1 ? 'disabled' : ''}`;
+    prevBtn.innerHTML = "&lt;";
+    prevBtn.onclick = () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderList(currentVideos);
+            renderPagination(totalVideos);
+            window.scrollTo(0, 0);
+        }
+    };
+    paginationContainer.appendChild(prevBtn);
+    
+    // Tampilkan nomor halaman
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    
+    // Sesuaikan jika kita di dekat akhir
+    if (endPage - startPage + 1 < maxVisiblePages) {
+        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+    
+    // Tombol halaman pertama jika perlu
+    if (startPage > 1) {
+        const firstPageBtn = document.createElement("button");
+        firstPageBtn.className = "pagination-btn";
+        firstPageBtn.textContent = "1";
+        firstPageBtn.onclick = () => {
+            currentPage = 1;
+            renderList(currentVideos);
+            renderPagination(totalVideos);
+            window.scrollTo(0, 0);
+        };
+        paginationContainer.appendChild(firstPageBtn);
+        
+        // Tanda elipsis jika perlu
+        if (startPage > 2) {
+            const dots = document.createElement("span");
+            dots.className = "pagination-dots";
+            dots.textContent = "...";
+            paginationContainer.appendChild(dots);
+        }
+    }
+    
+    // Tampilkan nomor halaman
+    for (let i = startPage; i <= endPage; i++) {
+        const pageBtn = document.createElement("button");
+        pageBtn.className = `pagination-btn ${i === currentPage ? 'active' : ''}`;
+        pageBtn.textContent = i;
+        pageBtn.onclick = () => {
+            currentPage = i;
+            renderList(currentVideos);
+            renderPagination(totalVideos);
+            window.scrollTo(0, 0);
+        };
+        paginationContainer.appendChild(pageBtn);
+    }
+    
+    // Tombol halaman terakhir jika perlu
+    if (endPage < totalPages) {
+        // Tanda elipsis jika perlu
+        if (endPage < totalPages - 1) {
+            const dots = document.createElement("span");
+            dots.className = "pagination-dots";
+            dots.textContent = "...";
+            paginationContainer.appendChild(dots);
+        }
+        
+        const lastPageBtn = document.createElement("button");
+        lastPageBtn.className = "pagination-btn";
+        lastPageBtn.textContent = totalPages;
+        lastPageBtn.onclick = () => {
+            currentPage = totalPages;
+            renderList(currentVideos);
+            renderPagination(totalVideos);
+            window.scrollTo(0, 0);
+        };
+        paginationContainer.appendChild(lastPageBtn);
+    }
+    
+    // Tombol Next
+    const nextBtn = document.createElement("button");
+    nextBtn.className = `pagination-btn ${currentPage === totalPages ? 'disabled' : ''}`;
+    nextBtn.innerHTML = "&gt;";
+    nextBtn.onclick = () => {
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderList(currentVideos);
+            renderPagination(totalVideos);
+            window.scrollTo(0, 0);
+        }
+    };
+    paginationContainer.appendChild(nextBtn);
 }
 
 function openModal(id){
@@ -696,12 +878,16 @@ function initFilters(){
             const label = btn.textContent.trim().toLowerCase();
 
             if(label === "semua"){
+                currentPage = 1;
                 renderList(currentVideos);
+                renderPagination(currentVideos.length);
             } else {
                 const filtered = currentVideos.filter(v =>
                     (v.labels || []).map(x=>x.toLowerCase()).includes(label)
                 );
+                currentPage = 1;
                 renderList(filtered);
+                renderPagination(filtered.length);
             }
         };
     });
@@ -719,7 +905,9 @@ function performSearch() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
     
     if (searchTerm === '') {
+        currentPage = 1;
         renderList(currentVideos);
+        renderPagination(currentVideos.length);
         return;
     }
     
@@ -728,7 +916,9 @@ function performSearch() {
         v.description.toLowerCase().includes(searchTerm)
     );
     
+    currentPage = 1;
     renderList(filtered);
+    renderPagination(filtered.length);
 }
 </script>
 </body>
